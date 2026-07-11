@@ -14,6 +14,33 @@ import Answer from "../models/Answer.js";
 
 import StorageManager from "../storage/StorageManager.js";
 
+
+import {
+
+    login as loginUser,
+
+    logout,
+
+    observeAuthState
+
+} from "../firebase/auth.js";
+
+
+const loginScreen =
+    document.getElementById(
+        "loginScreen"
+    );
+
+const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+
 const dashboardScreen =
     document.getElementById("dashboardScreen");
 
@@ -49,41 +76,79 @@ let sessionFinished = false;
 
 initializeCalculator(submit);
 
-renderDashboard(storageManager);
+observeAuthState(
+
+    (user) => {
+
+        if (user) {
+
+            loginScreen.hidden = true;
+
+            dashboardScreen.hidden = false;
+
+            resultScreen.hidden = true;
+
+            practiceScreen.hidden = true;
+
+            renderDashboard(
+
+                storageManager
+
+            );
+
+        }
+
+        else {
+
+            loginScreen.hidden = false;
+
+            dashboardScreen.hidden = true;
+
+            resultScreen.hidden = true;
+
+            practiceScreen.hidden = true;
+
+        }
+
+    }
+
+);
+
+// renderDashboard(storageManager);
 
 document
     .getElementById("tablesButton")
     .addEventListener(
         "click",
-        () => startPractice("TABLES")
+        async () => startPractice("TABLES")
     );
 
 document
     .getElementById("squaresButton")
     ?.addEventListener(
         "click",
-        () => startPractice("SQUARES")
+        async () => startPractice("SQUARES")
     );
 
 document
     .getElementById("cubesButton")
     ?.addEventListener(
         "click",
-        () => startPractice("CUBES")
+        async () => startPractice("CUBES")
     );
 
 document
     .getElementById("squareRootsButton")
     ?.addEventListener(
         "click",
-        () => startPractice("SQUARE_ROOTS")
+        async () => startPractice("SQUARE_ROOTS")
     );
 
 document
     .getElementById("cubeRootsButton")
     ?.addEventListener(
         "click",
-        () => startPractice("CUBE_ROOTS")
+        async () => startPractice("CUBE_ROOTS")
     );
 
 
@@ -91,21 +156,21 @@ document
     .getElementById("equivalentsButton")
     ?.addEventListener(
         "click",
-        () => startPractice("EQUIVALENTS")
+        async () => startPractice("EQUIVALENTS")
     );
 
 document
     .getElementById("ratiosButton")
     ?.addEventListener(
         "click",
-        () => alert("Coming Soon")
+        async () => alert("Coming Soon")
     );
 
 document
     .getElementById("mixedButton")
     ?.addEventListener(
         "click",
-        () => alert("Coming Soon")
+        async () => alert("Coming Soon")
     );
 
 document
@@ -114,8 +179,67 @@ document
         "click",
         backToDashboard
     );
+document
 
-function startPractice(practiceType) {
+    .getElementById(
+        "loginButton"
+    )
+
+    .addEventListener(
+
+        "click",
+
+        login
+
+    );
+
+document
+
+    .getElementById("logoutButton")
+
+    ?.addEventListener(
+
+        "click",
+
+        logoutUser
+
+    );
+
+    document
+
+    .getElementById("quitPracticeButton")
+
+    .addEventListener(
+
+        "click",
+
+        quitPractice
+
+    );
+
+async function login() {
+
+    try {
+
+        await loginUser(
+
+            emailInput.value.trim(),
+
+            passwordInput.value
+
+        );
+
+    }
+
+    catch (error) {
+
+        alert(error.message);
+
+    }
+
+}
+
+async function startPractice(practiceType) {
 
     dashboardScreen.hidden = true;
 
@@ -128,27 +252,34 @@ function startPractice(practiceType) {
     session =
         new Session(practiceType);
 
+    const questions =
+        generateQuestions(practiceType);
+
+    session.originalQuestionCount =
+        questions.length;
+
     questionQueue =
-        new QuestionQueue(
-            generateQuestions(practiceType)
-        );
+        new QuestionQueue(questions);
 
     sessionManager =
         new SessionManager(
+
             session,
+
             questionQueue
+
         );
 
-    showQuestion();
+    await showQuestion();
 
 }
 
 
-function showQuestion() {
+async function showQuestion() {
 
     if (!sessionManager.hasNextQuestion()) {
 
-        finishSession();
+        await finishSession();
 
         return;
 
@@ -166,10 +297,9 @@ function showQuestion() {
     const solvedQuestionCount =
         session.getQuestionSolvedCount();
 
-    const totalQuestionCount =
-        solvedQuestionCount +
-        questionQueue.getTotalQuestionCount() +
-        1;
+    
+        const totalQuestionCount =
+    session.originalQuestionCount;
 
     progressElement.textContent =
         `${solvedQuestionCount + 1} / ${totalQuestionCount}`;
@@ -182,7 +312,7 @@ function showQuestion() {
 
 }
 
-function submit() {
+async function submit() {
 
     if (sessionFinished) {
 
@@ -222,7 +352,7 @@ function submit() {
 
     handleAdaptiveQueue(answer);
 
-    showQuestion();
+    await showQuestion();
 
 }
 
@@ -276,13 +406,9 @@ function handleAdaptiveQueue(answer) {
 
 }
 
+async function finishSession() {
 
-
-
-
-
-function finishSession() {
-
+    alert("sessionFin");
     if (sessionFinished) {
 
         return;
@@ -296,7 +422,7 @@ function finishSession() {
     session.statistics =
         calculate(session);
 
-    storageManager.saveSession(session);
+    await storageManager.saveSession(session);
 
     practiceScreen.hidden = true;
 
@@ -307,6 +433,50 @@ function finishSession() {
 }
 
 function backToDashboard() {
+
+    resultScreen.hidden = true;
+
+    dashboardScreen.hidden = false;
+
+    renderDashboard(storageManager);
+
+}
+
+async function logoutUser() {
+
+    try {
+
+        await logout();
+
+    }
+
+    catch (error) {
+
+        alert(error.message);
+
+    }
+
+}
+
+function quitPractice() {
+
+    if (
+
+        !confirm(
+
+            "Quit this practice session?"
+
+        )
+
+    ) {
+
+        return;
+
+    }
+
+    sessionFinished = true;
+
+    practiceScreen.hidden = true;
 
     resultScreen.hidden = true;
 

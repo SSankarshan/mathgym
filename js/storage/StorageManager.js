@@ -1,43 +1,157 @@
+import {
+
+    collection,
+
+    addDoc,
+
+    getDocs,
+
+    deleteDoc,
+
+    doc
+
+} from "firebase/firestore";
+
+import {
+
+    db
+
+} from "../firebase/firestore.js";
+
+import {
+
+    getCurrentUser
+
+} from "../firebase/auth.js";
+
 export default class StorageManager {
 
-    constructor() {
+    async loadSessions() {
 
-        this.storageKey = "mental-math-history";
+        const user =
+            getCurrentUser();
 
-    }
+        if (!user) {
 
-    loadSessions() {
-
-        const sessionJson =
-            localStorage.getItem(this.storageKey);
-
-        if (!sessionJson) {
             return [];
+
         }
 
-        return JSON.parse(sessionJson);
+        const snapshot =
+            await getDocs(
 
-    }
+                collection(
 
-    saveSession(session) {
+                    db,
 
-        const sessionList = this.loadSessions();
+                    "users",
 
-        sessionList.push(session);
+                    user.uid,
 
-        localStorage.setItem(
+                    "sessions"
 
-            this.storageKey,
+                )
 
-            JSON.stringify(sessionList)
+            );
+
+        return snapshot.docs.map(
+
+            doc => doc.data()
 
         );
 
     }
 
-    clearHistory() {
+    async saveSession(session) {
 
-        localStorage.removeItem(this.storageKey);
+        const user =
+            getCurrentUser();
+
+        if (!user) {
+
+            return;
+
+        }
+
+        await addDoc(
+
+            collection(
+
+                db,
+
+                "users",
+
+                user.uid,
+
+                "sessions"
+
+            ),
+
+            JSON.parse(
+
+                JSON.stringify(session)
+
+            )
+
+        );
+
+    }
+
+    async clearHistory() {
+
+        const user =
+            getCurrentUser();
+
+        if (!user) {
+
+            return;
+
+        }
+
+        const snapshot =
+            await getDocs(
+
+                collection(
+
+                    db,
+
+                    "users",
+
+                    user.uid,
+
+                    "sessions"
+
+                )
+
+            );
+
+        for (
+
+            const session of
+
+            snapshot.docs
+
+        ) {
+
+            await deleteDoc(
+
+                doc(
+
+                    db,
+
+                    "users",
+
+                    user.uid,
+
+                    "sessions",
+
+                    session.id
+
+                )
+
+            );
+
+        }
 
     }
 

@@ -17,15 +17,51 @@
 
     <div class="container">
 
+        <div id="loginScreen">
+
+            <h1>
+        
+                Mental Math Gym
+        
+            </h1>
+        
+            <input
+        
+                id="email"
+        
+                type="email"
+        
+                placeholder="Email"
+        
+            >
+        
+            <input
+        
+                id="password"
+        
+                type="password"
+        
+                placeholder="Password"
+        
+            >
+        
+            <button id="loginButton">
+        
+                Login
+        
+            </button>
+        
+        </div>
         <!-- ====================================================== -->
         <!-- Dashboard -->
         <!-- ====================================================== -->
 
-        <div id="dashboardScreen">
+        <div id="dashboardScreen" hidden>
 
             <h1>Mental Math Gym</h1>
 
             <div class="dashboard">
+
 
                 <div class="dashboardCard">
 
@@ -93,11 +129,19 @@
 
             </div>
 
+            <button id="logoutButton">
+
+                Logout
+            
+            </button>
+
             <h2>
 
                 Memory Practice
 
             </h2>
+
+            
 
             <div class="practiceGrid">
 
@@ -239,6 +283,12 @@
                 </button>
 
             </div>
+
+            <button id="quitPracticeButton">
+
+                Quit Session
+            
+            </button>
 
         </div>
 

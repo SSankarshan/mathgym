@@ -12,41 +12,30 @@ export function generateQuestions(practiceType) {
 
         case "TABLES":
 
-            questions =
-                generateTables();
+            questions = generateTables();
 
             break;
 
         case "SQUARES":
 
-            questions =
-                generateSquares();
+            questions = generateSquares();
 
             break;
 
         case "EQUIVALENTS":
 
-            questions =
-                generateEquivalents();
+            questions = generateEquivalents();
 
             break;
 
         default:
 
-            alert(
-
-                `${practiceType} is not implemented yet.`
-
-            );
+            alert(`${practiceType} is not implemented yet.`);
 
             return [];
 
     }
 
-    return shuffle(
-
-        questions
-
-    );
+    return shuffle(questions);
 
 }

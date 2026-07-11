@@ -11,17 +11,17 @@ export const CONFIG = {
     tables: {
 
         minOperand1: 2,
-
-        maxOperand1: 20,
-
-        minOperand2: 2,
-
+    
+        maxOperand1: 2,
+    
+        minOperand2: 6,
+    
         maxOperand2: 10,
-
-        reducedOperand1: [2, 10, 11, 20],
-
-        reducedOperand2Limit: 5
-
+    
+        reducedOperand1: [],
+    
+        reducedOperand2Limit: 0
+    
     },
 
     squares: {
