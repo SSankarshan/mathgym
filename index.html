@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mental Math Gym</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="practiceScreen">
+    
+            <h1>Mental Math Gym</h1>
+    
+            <div id="progress">1 / 1</div>
+    
+            <div id="question"></div>
+    
+            <input
+                    id="answer"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+            >
+    
+            <div class="calculator">
+    
+                <button data-value="7">7</button>
+                <button data-value="8">8</button>
+                <button data-value="9">9</button>
+    
+                <button data-value="4">4</button>
+                <button data-value="5">5</button>
+                <button data-value="6">6</button>
+    
+                <button data-value="1">1</button>
+                <button data-value="2">2</button>
+                <button data-value="3">3</button>
+    
+                <button id="clear">C</button>
+                <button data-value="0">0</button>
+                <button id="submit">✓</button>
+    
+            </div>
+    
+        </div>
+    
+        <div id="resultScreen" hidden>
+    
+            <h1>Session Summary</h1>
+    
+            <table id="summaryTable"></table>
+    
+            <h2>Wrong Questions</h2>
+    
+            <table id="wrongTable"></table>
+    
+            <h2>Weak Tables</h2>
+    
+            <table id="weakTable"></table>
+    
+            <button id="restartButton">
+    
+                Practice Again
+    
+            </button>
+    
+        </div>
+    
+    </div>
+    
+    <script type="module" src="js/core/app.js"></script>
+
+</body>
+
+</html>
