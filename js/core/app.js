@@ -1,6 +1,8 @@
 import { initializeCalculator } from "./calculator.js";
 import { calculate } from "./stats.js";
 import { renderResult } from "./resultRenderer.js";
+import { renderDashboard } from "./dashboardRenderer.js";
+
 import SessionManager from "./SessionManager.js";
 import QuestionQueue from "./QuestionQueue.js";
 
@@ -12,31 +14,135 @@ import Answer from "../models/Answer.js";
 
 import StorageManager from "../storage/StorageManager.js";
 
-const questionElement = document.getElementById("question");
-const progressElement = document.getElementById("progress");
-const answerInput = document.getElementById("answer");
+const dashboardScreen =
+    document.getElementById("dashboardScreen");
 
-const storageManager = new StorageManager();
+const practiceScreen =
+    document.getElementById("practiceScreen");
 
-const questionQueue =
-    new QuestionQueue(generateQuestions());
+const resultScreen =
+    document.getElementById("resultScreen");
 
-const session =
-    new Session("TABLES");
+const questionElement =
+    document.getElementById("question");
 
-const sessionManager =
-    new SessionManager(
-        session,
-        questionQueue
-    );
+const progressElement =
+    document.getElementById("progress");
+
+const answerInput =
+    document.getElementById("answer");
+
+const storageManager =
+    new StorageManager();
+
+let session = null;
+
+let questionQueue = null;
+
+let sessionManager = null;
 
 let currentQuestion = null;
+
 let startTime = 0;
+
 let sessionFinished = false;
 
 initializeCalculator(submit);
 
-showQuestion();
+renderDashboard(storageManager);
+
+document
+    .getElementById("tablesButton")
+    .addEventListener(
+        "click",
+        () => startPractice("TABLES")
+    );
+
+document
+    .getElementById("squaresButton")
+    ?.addEventListener(
+        "click",
+        () => startPractice("SQUARES")
+    );
+
+document
+    .getElementById("cubesButton")
+    ?.addEventListener(
+        "click",
+        () => startPractice("CUBES")
+    );
+
+document
+    .getElementById("squareRootsButton")
+    ?.addEventListener(
+        "click",
+        () => startPractice("SQUARE_ROOTS")
+    );
+
+document
+    .getElementById("cubeRootsButton")
+    ?.addEventListener(
+        "click",
+        () => startPractice("CUBE_ROOTS")
+    );
+
+
+document
+    .getElementById("equivalentsButton")
+    ?.addEventListener(
+        "click",
+        () => startPractice("EQUIVALENTS")
+    );
+
+document
+    .getElementById("ratiosButton")
+    ?.addEventListener(
+        "click",
+        () => alert("Coming Soon")
+    );
+
+document
+    .getElementById("mixedButton")
+    ?.addEventListener(
+        "click",
+        () => alert("Coming Soon")
+    );
+
+document
+    .getElementById("restartButton")
+    .addEventListener(
+        "click",
+        backToDashboard
+    );
+
+function startPractice(practiceType) {
+
+    dashboardScreen.hidden = true;
+
+    resultScreen.hidden = true;
+
+    practiceScreen.hidden = false;
+
+    sessionFinished = false;
+
+    session =
+        new Session(practiceType);
+
+    questionQueue =
+        new QuestionQueue(
+            generateQuestions(practiceType)
+        );
+
+    sessionManager =
+        new SessionManager(
+            session,
+            questionQueue
+        );
+
+    showQuestion();
+
+}
+
 
 function showQuestion() {
 
@@ -51,8 +157,11 @@ function showQuestion() {
     currentQuestion =
         sessionManager.getCurrentQuestion();
 
-    questionElement.textContent =
-        currentQuestion.display;
+    questionElement.innerHTML =
+        currentQuestion.display.replace(
+            /\n/g,
+            "<br>"
+        );
 
     const solvedQuestionCount =
         session.getQuestionSolvedCount();
@@ -76,28 +185,36 @@ function showQuestion() {
 function submit() {
 
     if (sessionFinished) {
+
         return;
+
     }
 
     const answerText =
         answerInput.value.trim();
 
     if (answerText === "") {
-        return;
-    }
 
-    const responseTimeMs =
-        Math.round(performance.now() - startTime);
+        return;
+
+    }
 
     const answer =
         new Answer({
 
-            question: currentQuestion,
+            question:
+                currentQuestion,
 
             userAnswer:
-                parseInt(answerText, 10),
+                Number(
+                    answerText
+                ),
 
-            responseTimeMs
+            responseTimeMs:
+                Math.round(
+                    performance.now() -
+                    startTime
+                )
 
         });
 
@@ -112,12 +229,17 @@ function submit() {
 function handleAdaptiveQueue(answer) {
 
     if (!CONFIG.session.adaptiveMode) {
+
         return;
+
     }
 
     if (
+
         CONFIG.session.repeatWrongQuestion &&
+
         !answer.correct
+
     ) {
 
         questionQueue.repeatQuestion(
@@ -133,9 +255,13 @@ function handleAdaptiveQueue(answer) {
     }
 
     if (
+
         CONFIG.session.repeatSlowQuestion &&
+
         answer.responseTimeMs >
+
         CONFIG.session.slowQuestionThresholdMs
+
     ) {
 
         questionQueue.repeatQuestion(
@@ -150,10 +276,17 @@ function handleAdaptiveQueue(answer) {
 
 }
 
+
+
+
+
+
 function finishSession() {
 
     if (sessionFinished) {
+
         return;
+
     }
 
     sessionFinished = true;
@@ -165,21 +298,20 @@ function finishSession() {
 
     storageManager.saveSession(session);
 
-    document.getElementById(
-        "practiceScreen"
-    ).hidden = true;
+    practiceScreen.hidden = true;
 
-    document.getElementById(
-        "resultScreen"
-    ).hidden = false;
+    resultScreen.hidden = false;
 
     renderResult(session);
 
 }
 
-document
-    .getElementById("restartButton")
-    .addEventListener(
-        "click",
-        () => window.location.reload()
-    );
+function backToDashboard() {
+
+    resultScreen.hidden = true;
+
+    dashboardScreen.hidden = false;
+
+    renderDashboard(storageManager);
+
+}

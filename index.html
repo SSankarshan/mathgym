@@ -5,8 +5,7 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Mental Math Gym</title>
 
@@ -16,159 +15,274 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- ====================================================== -->
-    <!-- Dashboard Screen -->
-    <!-- ====================================================== -->
+        <!-- ====================================================== -->
+        <!-- Dashboard -->
+        <!-- ====================================================== -->
 
-    <div id="dashboardScreen">
+        <div id="dashboardScreen">
 
-        <h1>Mental Math Gym</h1>
+            <h1>Mental Math Gym</h1>
 
-        <div class="dashboard">
+            <div class="dashboard">
 
-            <div class="dashboardCard">
+                <div class="dashboardCard">
 
-                <div class="dashboardTitle">
+                    <div class="dashboardTitle">
 
-                    Total Sessions
+                        Total Sessions
+
+                    </div>
+
+                    <div class="dashboardValue" id="dashboardTotalSessions">
+
+                        0
+
+                    </div>
 
                 </div>
 
-                <div
-                    class="dashboardValue"
-                    id="dashboardTotalSessions">
+                <div class="dashboardCard">
+
+                    <div class="dashboardTitle">
+
+                        Total Questions
+
+                    </div>
+
+                    <div class="dashboardValue" id="dashboardTotalQuestions">
+
+                        0
+
+                    </div>
+
+                </div>
+
+                <div class="dashboardCard">
+
+                    <div class="dashboardTitle">
+
+                        Best Accuracy
+
+                    </div>
+
+                    <div class="dashboardValue" id="dashboardBestAccuracy">
+
+                        0%
+
+                    </div>
+
+                </div>
+
+                <div class="dashboardCard">
+
+                    <div class="dashboardTitle">
+
+                        Fastest Average
+
+                    </div>
+
+                    <div class="dashboardValue" id="dashboardFastestAverage">
+
+                        -
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h2>
+
+                Memory Practice
+
+            </h2>
+
+            <div class="practiceGrid">
+
+                <button id="tablesButton" class="practiceButton">
+
+                    <strong>Tables</strong>
+
+                    <br>
+
+                    2 - 20 × 2 - 10
+
+                </button>
+
+                <button id="squaresButton" class="practiceButton">
+
+                    <strong>Squares</strong>
+
+                    <br>
+
+                    2² - 100²
+
+                </button>
+
+                <button id="cubesButton" class="practiceButton">
+
+                    <strong>Cubes</strong>
+
+                    <br>
+
+                    2³ - 30³
+
+                </button>
+
+                <button id="squareRootsButton" class="practiceButton">
+
+                    <strong>Square Roots</strong>
+
+                    <br>
+
+                    Perfect Squares
+
+                </button>
+
+                <button id="cubeRootsButton" class="practiceButton">
+
+                    <strong>Cube Roots</strong>
+
+                    <br>
+
+                    Perfect Cubes
+
+                </button>
+
+                <button id="equivalentsButton" class="practiceButton">
+
+                    <strong>Equivalents</strong>
+
+                    <br>
+
+                    Fraction / % → Decimal
+
+                </button>
+                <button id="ratiosButton" class="practiceButton">
+
+                    <strong>Ratios</strong>
+
+                    <br>
+
+                    Coming Soon
+
+                </button>
+
+                <button id="mixedButton" class="practiceButton">
+
+                    <strong>Mixed</strong>
+
+                    <br>
+
+                    Coming Soon
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- ====================================================== -->
+        <!-- Practice -->
+        <!-- ====================================================== -->
+
+        <div id="practiceScreen" hidden>
+
+            <h1>
+
+                Mental Math Gym
+
+            </h1>
+
+            <div id="progress">
+
+                1 / 1
+
+            </div>
+
+            <div id="question"></div>
+
+            <input id="answer" type="text" inputmode="numeric" autocomplete="off">
+
+            <div class="calculator">
+
+                <button data-value="7">7</button>
+                <button data-value="8">8</button>
+                <button data-value="9">9</button>
+
+                <button data-value="4">4</button>
+                <button data-value="5">5</button>
+                <button data-value="6">6</button>
+
+                <button data-value="1">1</button>
+                <button data-value="2">2</button>
+                <button data-value="3">3</button>
+
+                <button id="clear">
+
+                    C
+
+                </button>
+
+                <button data-value="0">
 
                     0
 
-                </div>
+                </button>
 
-            </div>
+                <button id="submit">
 
-            <div class="dashboardCard">
+                    ✓
 
-                <div class="dashboardTitle">
-
-                    Total Questions
-
-                </div>
-
-                <div
-                    class="dashboardValue"
-                    id="dashboardTotalQuestions">
-
-                    0
-
-                </div>
-
-            </div>
-
-            <div class="dashboardCard">
-
-                <div class="dashboardTitle">
-
-                    Best Accuracy
-
-                </div>
-
-                <div
-                    class="dashboardValue"
-                    id="dashboardBestAccuracy">
-
-                    0%
-
-                </div>
-
-            </div>
-
-            <div class="dashboardCard">
-
-                <div class="dashboardTitle">
-
-                    Fastest Average
-
-                </div>
-
-                <div
-                    class="dashboardValue"
-                    id="dashboardFastestAverage">
-
-                    -
-
-                </div>
+                </button>
 
             </div>
 
         </div>
 
-        <button id="startPracticeButton">
+        <!-- ====================================================== -->
+        <!-- Results -->
+        <!-- ====================================================== -->
 
-            Start Practice
+        <div id="resultScreen" hidden>
 
-        </button>
+            <h1>
 
-    </div>
+                Session Summary
 
-    <!-- ====================================================== -->
-    <!-- Practice Screen -->
-    <!-- ====================================================== -->
+            </h1>
 
-    <div
-        id="practiceScreen"
-        hidden>
+            <table id="summaryTable"></table>
 
-        <h1>Mental Math Gym</h1>
+            <h2>
 
-        <div id="progress">
+                Wrong Questions
 
-            1 / 1
+            </h2>
 
-        </div>
+            <table id="wrongTable"></table>
 
-        <div id="question"></div>
+            <h2>
 
-        <input
+                Weak Tables
 
-            id="answer"
+            </h2>
 
-            type="text"
+            <table id="weakTable"></table>
 
-            inputmode="numeric"
+            <h2>
 
-            autocomplete="off"
+                Weak Multipliers
 
-        >
+            </h2>
 
-        <div class="calculator">
+            <table id="weakMultiplierTable"></table>
 
-            <button data-value="7">7</button>
-            <button data-value="8">8</button>
-            <button data-value="9">9</button>
+            <button id="restartButton">
 
-            <button data-value="4">4</button>
-            <button data-value="5">5</button>
-            <button data-value="6">6</button>
-
-            <button data-value="1">1</button>
-            <button data-value="2">2</button>
-            <button data-value="3">3</button>
-
-            <button id="clear">
-
-                C
-
-            </button>
-
-            <button data-value="0">
-
-                0
-
-            </button>
-
-            <button id="submit">
-
-                ✓
+                Back To Dashboard
 
             </button>
 
@@ -176,61 +290,9 @@
 
     </div>
 
-    <!-- ====================================================== -->
-    <!-- Result Screen -->
-    <!-- ====================================================== -->
+    <script type="module" src="js/core/app.js">
 
-    <div
-        id="resultScreen"
-        hidden>
-
-        <h1>
-
-            Session Summary
-
-        </h1>
-
-        <table id="summaryTable"></table>
-
-        <h2>
-
-            Wrong Questions
-
-        </h2>
-
-        <table id="wrongTable"></table>
-
-        <h2>
-
-            Weak Tables
-
-        </h2>
-
-        <table id="weakTable"></table>
-
-        <h2>
-
-            Weak Multipliers
-
-        </h2>
-
-        <table id="weakMultiplierTable"></table>
-
-        <button id="restartButton">
-
-            Back To Dashboard
-
-        </button>
-
-    </div>
-
-</div>
-
-<script
-    type="module"
-    src="js/core/app.js">
-
-</script>
+    </script>
 
 </body>
 

@@ -4,40 +4,98 @@ export const CONFIG = {
 
         name: "Mental Math Gym",
 
-        version: "0.1.0"
+        version: "0.2.0"
 
     },
 
     tables: {
 
-        minTable: 2,
+        minOperand1: 2,
 
-        maxTable: 20,
+        maxOperand1: 20,
 
-        minMultiplier: 2,
+        minOperand2: 2,
 
-        maxMultiplier: 10,
+        maxOperand2: 10,
 
-        reducedTables: [2, 10, 11, 20],
+        reducedOperand1: [2, 10, 11, 20],
 
-        reducedMultiplierLimit: 5
+        reducedOperand2Limit: 5
+
+    },
+
+    squares: {
+
+        minNumber: 2,
+
+        maxNumber: 100
+
+    },
+
+    cubes: {
+
+        minNumber: 2,
+
+        maxNumber: 30
+
+    },
+
+    squareRoots: {
+
+        minNumber: 2,
+
+        maxNumber: 100
+
+    },
+
+    cubeRoots: {
+
+        minNumber: 2,
+
+        maxNumber: 30
+
+    },
+
+    percentages: {
+
+        minNumber: 1,
+
+        maxNumber: 1000,
+
+        allowedPercentages: [
+
+            1,
+            2,
+            5,
+            10,
+            20,
+            25,
+            40,
+            50,
+            60,
+            75,
+            80,
+            90,
+            100
+
+        ]
 
     },
 
     session: {
 
         adaptiveMode: true,
-    
+
         repeatWrongQuestion: true,
-    
+
         repeatSlowQuestion: true,
-    
+
         slowQuestionThresholdMs: 3000,
-    
+
         repeatWrongQuestionAfter: 8,
-    
+
         repeatSlowQuestionAfter: 12
-    
+
     }
 
 };
