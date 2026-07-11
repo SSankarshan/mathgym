@@ -4,31 +4,31 @@ export const CONFIG = {
 
         name: "Mental Math Gym",
 
-        version: "0.2.0"
+        version: "2.0"
 
     },
 
     tables: {
 
         minOperand1: 2,
-    
-        maxOperand1: 2,
-    
-        minOperand2: 6,
-    
+
+        maxOperand1: 20,
+
+        minOperand2: 2,
+
         maxOperand2: 10,
-    
-        reducedOperand1: [],
-    
-        reducedOperand2Limit: 0
-    
+
+        reducedOperand1: [2, 10, 11, 20],
+
+        reducedOperand2Limit: 5
+
     },
 
     squares: {
 
         minNumber: 2,
 
-        maxNumber: 100
+        maxNumber: 50
 
     },
 
@@ -88,7 +88,7 @@ export const CONFIG = {
 
         repeatWrongQuestion: true,
 
-        repeatSlowQuestion: true,
+        repeatSlowQuestion: false,
 
         slowQuestionThresholdMs: 3000,
 
