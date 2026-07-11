@@ -1,12 +1,25 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCM2mB8rTLHBIj_E8FyX81ddnlkcO2B9xM",
-    authDomain: "mathgym-1.firebaseapp.com",
-    projectId: "mathgym-1",
-    storageBucket: "mathgym-1.firebasestorage.app",
-    messagingSenderId: "634090875446",
-    appId: "1:634090875446:web:b405b8f0fa88c742e34697"
+
+    apiKey:
+        import.meta.env.VITE_FIREBASE_API_KEY,
+
+    authDomain:
+        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+
+    projectId:
+        import.meta.env.VITE_FIREBASE_PROJECT_ID,
+
+    storageBucket:
+        import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+
+    messagingSenderId:
+        import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+
+    appId:
+        import.meta.env.VITE_FIREBASE_APP_ID
+
 };
 
 export const app =
