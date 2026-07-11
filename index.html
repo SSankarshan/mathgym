@@ -18,43 +18,87 @@
 
 <div class="container">
 
-    <!-- ========================= -->
-    <!-- Dashboard Screen          -->
-    <!-- ========================= -->
+    <!-- ====================================================== -->
+    <!-- Dashboard Screen -->
+    <!-- ====================================================== -->
 
     <div id="dashboardScreen">
 
         <h1>Mental Math Gym</h1>
 
-        <div class="dashboardCard">
+        <div class="dashboard">
 
-            <div>Total Sessions</div>
+            <div class="dashboardCard">
 
-            <div id="dashboardTotalSessions">0</div>
+                <div class="dashboardTitle">
 
-        </div>
+                    Total Sessions
 
-        <div class="dashboardCard">
+                </div>
 
-            <div>Total Questions Solved</div>
+                <div
+                    class="dashboardValue"
+                    id="dashboardTotalSessions">
 
-            <div id="dashboardTotalQuestions">0</div>
+                    0
 
-        </div>
+                </div>
 
-        <div class="dashboardCard">
+            </div>
 
-            <div>Best Accuracy</div>
+            <div class="dashboardCard">
 
-            <div id="dashboardBestAccuracy">0%</div>
+                <div class="dashboardTitle">
 
-        </div>
+                    Total Questions
 
-        <div class="dashboardCard">
+                </div>
 
-            <div>Fastest Average</div>
+                <div
+                    class="dashboardValue"
+                    id="dashboardTotalQuestions">
 
-            <div id="dashboardFastestAverage">-</div>
+                    0
+
+                </div>
+
+            </div>
+
+            <div class="dashboardCard">
+
+                <div class="dashboardTitle">
+
+                    Best Accuracy
+
+                </div>
+
+                <div
+                    class="dashboardValue"
+                    id="dashboardBestAccuracy">
+
+                    0%
+
+                </div>
+
+            </div>
+
+            <div class="dashboardCard">
+
+                <div class="dashboardTitle">
+
+                    Fastest Average
+
+                </div>
+
+                <div
+                    class="dashboardValue"
+                    id="dashboardFastestAverage">
+
+                    -
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -66,23 +110,35 @@
 
     </div>
 
-    <!-- ========================= -->
-    <!-- Practice Screen           -->
-    <!-- ========================= -->
+    <!-- ====================================================== -->
+    <!-- Practice Screen -->
+    <!-- ====================================================== -->
 
-    <div id="practiceScreen" hidden>
+    <div
+        id="practiceScreen"
+        hidden>
 
         <h1>Mental Math Gym</h1>
 
-        <div id="progress">1 / 1</div>
+        <div id="progress">
+
+            1 / 1
+
+        </div>
 
         <div id="question"></div>
 
         <input
-                id="answer"
-                type="text"
-                inputmode="numeric"
-                autocomplete="off">
+
+            id="answer"
+
+            type="text"
+
+            inputmode="numeric"
+
+            autocomplete="off"
+
+        >
 
         <div class="calculator">
 
@@ -98,33 +154,65 @@
             <button data-value="2">2</button>
             <button data-value="3">3</button>
 
-            <button id="clear">C</button>
-            <button data-value="0">0</button>
-            <button id="submit">✓</button>
+            <button id="clear">
+
+                C
+
+            </button>
+
+            <button data-value="0">
+
+                0
+
+            </button>
+
+            <button id="submit">
+
+                ✓
+
+            </button>
 
         </div>
 
     </div>
 
-    <!-- ========================= -->
-    <!-- Result Screen             -->
-    <!-- ========================= -->
+    <!-- ====================================================== -->
+    <!-- Result Screen -->
+    <!-- ====================================================== -->
 
-    <div id="resultScreen" hidden>
+    <div
+        id="resultScreen"
+        hidden>
 
-        <h1>Session Summary</h1>
+        <h1>
+
+            Session Summary
+
+        </h1>
 
         <table id="summaryTable"></table>
 
-        <h2>Wrong Questions</h2>
+        <h2>
+
+            Wrong Questions
+
+        </h2>
 
         <table id="wrongTable"></table>
 
-        <h2>Weak Tables</h2>
+        <h2>
+
+            Weak Tables
+
+        </h2>
 
         <table id="weakTable"></table>
 
-        <h2>Weak Multipliers</h2>
+        <h2>
+
+            Weak Multipliers
+
+        </h2>
 
         <table id="weakMultiplierTable"></table>
 
@@ -138,7 +226,11 @@
 
 </div>
 
-<script type="module" src="js/core/app.js"></script>
+<script
+    type="module"
+    src="js/core/app.js">
+
+</script>
 
 </body>
 
