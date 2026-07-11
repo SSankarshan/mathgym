@@ -26,14 +26,18 @@ export const CONFIG = {
 
     session: {
 
-        adaptiveMode: false,
-
-        repeatWrongQuestions: false,
-
-        repeatSlowQuestions: false,
-
-        slowQuestionThresholdMs: 3000
-
+        adaptiveMode: true,
+    
+        repeatWrongQuestion: true,
+    
+        repeatSlowQuestion: true,
+    
+        slowQuestionThresholdMs: 3000,
+    
+        repeatWrongQuestionAfter: 8,
+    
+        repeatSlowQuestionAfter: 12
+    
     }
 
 };

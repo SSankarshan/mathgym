@@ -1,4 +1,4 @@
-export default class question {
+export default class Question {
 
     constructor({
 

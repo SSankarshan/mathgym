@@ -1,20 +1,36 @@
 import { initializeCalculator } from "./calculator.js";
 import { calculate } from "./stats.js";
-import { saveSession } from "../storage/storage.js";
+import { renderResult } from "./resultRenderer.js";
+import SessionManager from "./SessionManager.js";
+import QuestionQueue from "./QuestionQueue.js";
+
 import { generateQuestions } from "../engine/engine.js";
+import { CONFIG } from "../config/config.js";
 
 import Session from "../models/Session.js";
 import Answer from "../models/Answer.js";
+
+import StorageManager from "../storage/StorageManager.js";
 
 const questionElement = document.getElementById("question");
 const progressElement = document.getElementById("progress");
 const answerInput = document.getElementById("answer");
 
-const questions = Object.freeze(generateQuestions());
+const storageManager = new StorageManager();
 
-const session = new Session("TABLES");
+const questionQueue =
+    new QuestionQueue(generateQuestions());
 
-let currentIndex = 0;
+const session =
+    new Session("TABLES");
+
+const sessionManager =
+    new SessionManager(
+        session,
+        questionQueue
+    );
+
+let currentQuestion = null;
 let startTime = 0;
 let sessionFinished = false;
 
@@ -24,7 +40,7 @@ showQuestion();
 
 function showQuestion() {
 
-    if (currentIndex >= questions.length) {
+    if (!sessionManager.hasNextQuestion()) {
 
         finishSession();
 
@@ -32,12 +48,22 @@ function showQuestion() {
 
     }
 
-    const question = questions[currentIndex];
+    currentQuestion =
+        sessionManager.getCurrentQuestion();
 
-    questionElement.textContent = question.display;
+    questionElement.textContent =
+        currentQuestion.display;
+
+    const solvedQuestionCount =
+        session.getQuestionSolvedCount();
+
+    const totalQuestionCount =
+        solvedQuestionCount +
+        questionQueue.getTotalQuestionCount() +
+        1;
 
     progressElement.textContent =
-        `${currentIndex + 1} / ${questions.length}`;
+        `${solvedQuestionCount + 1} / ${totalQuestionCount}`;
 
     answerInput.value = "";
 
@@ -49,137 +75,111 @@ function showQuestion() {
 
 function submit() {
 
-    if (sessionFinished)
+    if (sessionFinished) {
         return;
+    }
 
-    const value = answerInput.value.trim();
+    const answerText =
+        answerInput.value.trim();
 
-    if (value === "")
+    if (answerText === "") {
         return;
+    }
 
-    const question = questions[currentIndex];
+    const responseTimeMs =
+        Math.round(performance.now() - startTime);
 
-    session.add(
-
+    const answer =
         new Answer({
 
-            question,
+            question: currentQuestion,
 
-            userAnswer: parseInt(value, 10),
+            userAnswer:
+                parseInt(answerText, 10),
 
-            responseTimeMs:
-                Math.round(performance.now() - startTime)
+            responseTimeMs
 
-        })
+        });
 
-    );
+    sessionManager.addAnswer(answer);
 
-    currentIndex++;
+    handleAdaptiveQueue(answer);
 
     showQuestion();
 
 }
 
-function finishSession() {
+function handleAdaptiveQueue(answer) {
 
-    sessionFinished = true;
+    if (!CONFIG.session.adaptiveMode) {
+        return;
+    }
 
-    session.finish();
+    if (
+        CONFIG.session.repeatWrongQuestion &&
+        !answer.correct
+    ) {
 
-    session.statistics = calculate(session);
+        questionQueue.repeatQuestion(
 
-    saveSession(session);
+            answer.question,
 
-    document.getElementById("practiceScreen").hidden = true;
+            CONFIG.session.repeatWrongQuestionAfter
 
-    document.getElementById("resultScreen").hidden = false;
+        );
 
-    renderSummary();
+        return;
+
+    }
+
+    if (
+        CONFIG.session.repeatSlowQuestion &&
+        answer.responseTimeMs >
+        CONFIG.session.slowQuestionThresholdMs
+    ) {
+
+        questionQueue.repeatQuestion(
+
+            answer.question,
+
+            CONFIG.session.repeatSlowQuestionAfter
+
+        );
+
+    }
 
 }
 
-function renderSummary() {
+function finishSession() {
 
-    const summary = document.getElementById("summaryTable");
+    if (sessionFinished) {
+        return;
+    }
 
-    const wrong = document.getElementById("wrongTable");
+    sessionFinished = true;
 
-    const weak = document.getElementById("weakTable");
+    sessionManager.finish();
 
-    const s = session.statistics;
+    session.statistics =
+        calculate(session);
 
-    summary.innerHTML = `
+    storageManager.saveSession(session);
 
-<tr><td>Questions</td><td>${s.totalQuestions}</td></tr>
+    document.getElementById(
+        "practiceScreen"
+    ).hidden = true;
 
-<tr><td>Correct</td><td>${s.correct}</td></tr>
+    document.getElementById(
+        "resultScreen"
+    ).hidden = false;
 
-<tr><td>Wrong</td><td>${s.wrong}</td></tr>
-
-<tr><td>Accuracy</td><td>${s.accuracy.toFixed(2)}%</td></tr>
-
-<tr><td>Average</td><td>${(s.averageTime / 1000).toFixed(2)} sec</td></tr>
-
-<tr><td>Median</td><td>${(s.medianTime / 1000).toFixed(2)} sec</td></tr>
-
-<tr><td>Fastest</td><td>${(s.fastest / 1000).toFixed(2)} sec</td></tr>
-
-<tr><td>Slowest</td><td>${(s.slowest / 1000).toFixed(2)} sec</td></tr>
-
-`;
-
-    wrong.innerHTML =
-
-        "<tr><th>Question</th><th>Your</th><th>Correct</th><th>Time</th></tr>";
-
-    s.wrongQuestions.forEach(a => {
-
-        wrong.innerHTML += `
-
-<tr>
-
-<td>${a.question.display}</td>
-
-<td>${a.userAnswer}</td>
-
-<td>${a.question.answer}</td>
-
-<td>${(a.responseTimeMs / 1000).toFixed(2)}</td>
-
-</tr>
-
-`;
-
-    });
-
-    weak.innerHTML =
-
-        "<tr><th>Table</th><th>Accuracy</th><th>Average Time</th></tr>";
-
-    s.weakTables.forEach(t => {
-
-        weak.innerHTML += `
-
-<tr>
-
-<td>${t.table}</td>
-
-<td>${t.accuracy.toFixed(2)}%</td>
-
-<td>${(t.averageTime / 1000).toFixed(2)} sec</td>
-
-</tr>
-
-`;
-
-    });
+    renderResult(session);
 
 }
 
 document
     .getElementById("restartButton")
-    .addEventListener("click", () => {
-
-        location.reload();
-
-    });
+    .addEventListener(
+        "click",
+        () => window.location.reload()
+    );

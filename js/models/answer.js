@@ -1,4 +1,4 @@
-export default class answer {
+export default class Answer {
 
     constructor({
 

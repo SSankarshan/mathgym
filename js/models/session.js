@@ -1,8 +1,8 @@
-export default class session {
+export default class Session {
 
     constructor(mode) {
 
-        this.version = 1;
+        this.version = 2;
 
         this.mode = mode;
 
@@ -14,17 +14,27 @@ export default class session {
 
         this.statistics = null;
 
+        this.questionSolvedCount = 0;
+
     }
 
     add(answer) {
 
         this.answers.push(answer);
 
+        this.questionSolvedCount++;
+
     }
 
     finish() {
 
         this.finishedAt = new Date();
+
+    }
+
+    getQuestionSolvedCount() {
+
+        return this.questionSolvedCount;
 
     }
 

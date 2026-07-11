@@ -12,6 +12,26 @@ function median(values) {
 
 }
 
+function calculateQuestionPerMinute(answers) {
+
+    if (answers.length === 0)
+        return 0;
+
+    const totalTimeMs = answers.reduce(
+
+        (sum, answer) => sum + answer.responseTimeMs,
+
+        0
+
+    );
+
+    if (totalTimeMs === 0)
+        return 0;
+
+    return answers.length / (totalTimeMs / 60000);
+
+}
+
 function calculateWeakTables(answers) {
 
     const map = {};
@@ -47,22 +67,24 @@ function calculateWeakTables(answers) {
 
     return Object.values(map)
 
-        .map(t => ({
+        .map(tableStats => ({
 
-            table: t.table,
+            table: tableStats.table,
 
-            accuracy: t.correct * 100 / t.total,
+            accuracy:
+                tableStats.correct * 100 / tableStats.total,
 
-            averageTime: t.totalTime / t.total
+            averageTime:
+                tableStats.totalTime / tableStats.total
 
         }))
 
-        .sort((a, b) => {
+        .sort((first, second) => {
 
-            if (a.accuracy !== b.accuracy)
-                return a.accuracy - b.accuracy;
+            if (first.accuracy !== second.accuracy)
+                return first.accuracy - second.accuracy;
 
-            return b.averageTime - a.averageTime;
+            return second.averageTime - first.averageTime;
 
         });
 
@@ -103,22 +125,24 @@ function calculateWeakMultipliers(answers) {
 
     return Object.values(map)
 
-        .map(m => ({
+        .map(multiplierStats => ({
 
-            multiplier: m.multiplier,
+            multiplier: multiplierStats.multiplier,
 
-            accuracy: m.correct * 100 / m.total,
+            accuracy:
+                multiplierStats.correct * 100 / multiplierStats.total,
 
-            averageTime: m.totalTime / m.total
+            averageTime:
+                multiplierStats.totalTime / multiplierStats.total
 
         }))
 
-        .sort((a, b) => {
+        .sort((first, second) => {
 
-            if (a.accuracy !== b.accuracy)
-                return a.accuracy - b.accuracy;
+            if (first.accuracy !== second.accuracy)
+                return first.accuracy - second.accuracy;
 
-            return b.averageTime - a.averageTime;
+            return second.averageTime - first.averageTime;
 
         });
 
@@ -130,15 +154,23 @@ export function calculate(session) {
 
     const totalQuestions = answers.length;
 
-    const correctAnswers = answers.filter(a => a.correct);
+    const correctAnswers = answers.filter(answer => answer.correct);
 
-    const wrongAnswers = answers.filter(a => !a.correct);
+    const wrongAnswers = answers.filter(answer => !answer.correct);
 
     const responseTimes = answers
-        .map(a => a.responseTimeMs)
-        .sort((a, b) => a - b);
 
-    const totalTime = responseTimes.reduce((s, t) => s + t, 0);
+        .map(answer => answer.responseTimeMs)
+
+        .sort((first, second) => first - second);
+
+    const totalTime = responseTimes.reduce(
+
+        (sum, time) => sum + time,
+
+        0
+
+    );
 
     return {
 
@@ -149,36 +181,70 @@ export function calculate(session) {
         wrong: wrongAnswers.length,
 
         accuracy:
+
             totalQuestions === 0
+
                 ? 0
-                : correctAnswers.length * 100 / totalQuestions,
+
+                : (correctAnswers.length * 100) / totalQuestions,
 
         averageTime:
+
             totalQuestions === 0
+
                 ? 0
+
                 : totalTime / totalQuestions,
 
-        medianTime: median(responseTimes),
+        medianTime:
+
+            median(responseTimes),
 
         fastest:
+
             responseTimes.length === 0
+
                 ? 0
+
                 : responseTimes[0],
 
         slowest:
+
             responseTimes.length === 0
+
                 ? 0
+
                 : responseTimes[responseTimes.length - 1],
 
-        wrongQuestions: wrongAnswers,
+        questionPerMinute:
 
-        slowestQuestions: [...answers]
-            .sort((a, b) => b.responseTimeMs - a.responseTimeMs)
-            .slice(0, 10),
+            calculateQuestionPerMinute(answers),
 
-        weakTables: calculateWeakTables(answers),
+        wrongQuestions:
 
-        weakMultipliers: calculateWeakMultipliers(answers)
+            wrongAnswers,
+
+        slowestQuestions:
+
+            [...answers]
+
+                .sort(
+
+                    (first, second) =>
+
+                        second.responseTimeMs - first.responseTimeMs
+
+                )
+
+                .slice(0, 10),
+
+        weakTables:
+
+            calculateWeakTables(answers),
+
+        weakMultipliers:
+
+            calculateWeakMultipliers(answers)
 
     };
 
