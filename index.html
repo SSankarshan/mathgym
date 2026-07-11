@@ -5,7 +5,8 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Mental Math Gym</title>
 
@@ -15,69 +16,129 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div id="practiceScreen">
+    <!-- ========================= -->
+    <!-- Dashboard Screen          -->
+    <!-- ========================= -->
 
-            <h1>Mental Math Gym</h1>
+    <div id="dashboardScreen">
 
-            <div id="progress">1 / 1</div>
+        <h1>Mental Math Gym</h1>
 
-            <div id="question"></div>
+        <div class="dashboardCard">
 
-            <input id="answer" type="text" inputmode="numeric" autocomplete="off">
+            <div>Total Sessions</div>
 
-            <div class="calculator">
-
-                <button data-value="7">7</button>
-                <button data-value="8">8</button>
-                <button data-value="9">9</button>
-
-                <button data-value="4">4</button>
-                <button data-value="5">5</button>
-                <button data-value="6">6</button>
-
-                <button data-value="1">1</button>
-                <button data-value="2">2</button>
-                <button data-value="3">3</button>
-
-                <button id="clear">C</button>
-                <button data-value="0">0</button>
-                <button id="submit">✓</button>
-
-            </div>
+            <div id="dashboardTotalSessions">0</div>
 
         </div>
 
-        <div id="resultScreen" hidden>
+        <div class="dashboardCard">
 
-            <h1>Session Summary</h1>
+            <div>Total Questions Solved</div>
 
-            <table id="summaryTable"></table>
+            <div id="dashboardTotalQuestions">0</div>
 
-            <h2>Wrong Questions</h2>
+        </div>
 
-            <table id="wrongTable"></table>
+        <div class="dashboardCard">
 
-            <h2>Weak Tables</h2>
+            <div>Best Accuracy</div>
 
-            <table id="weakTable"></table>
+            <div id="dashboardBestAccuracy">0%</div>
 
-            <h2>Weak Multipliers</h2>
+        </div>
 
-            <table id="weakMultiplierTable"></table>
+        <div class="dashboardCard">
 
-            <button id="restartButton">
+            <div>Fastest Average</div>
 
-                Practice Again
+            <div id="dashboardFastestAverage">-</div>
 
-            </button>
+        </div>
+
+        <button id="startPracticeButton">
+
+            Start Practice
+
+        </button>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Practice Screen           -->
+    <!-- ========================= -->
+
+    <div id="practiceScreen" hidden>
+
+        <h1>Mental Math Gym</h1>
+
+        <div id="progress">1 / 1</div>
+
+        <div id="question"></div>
+
+        <input
+                id="answer"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off">
+
+        <div class="calculator">
+
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+
+            <button id="clear">C</button>
+            <button data-value="0">0</button>
+            <button id="submit">✓</button>
 
         </div>
 
     </div>
 
-    <script type="module" src="js/core/app.js"></script>
+    <!-- ========================= -->
+    <!-- Result Screen             -->
+    <!-- ========================= -->
+
+    <div id="resultScreen" hidden>
+
+        <h1>Session Summary</h1>
+
+        <table id="summaryTable"></table>
+
+        <h2>Wrong Questions</h2>
+
+        <table id="wrongTable"></table>
+
+        <h2>Weak Tables</h2>
+
+        <table id="weakTable"></table>
+
+        <h2>Weak Multipliers</h2>
+
+        <table id="weakMultiplierTable"></table>
+
+        <button id="restartButton">
+
+            Back To Dashboard
+
+        </button>
+
+    </div>
+
+</div>
+
+<script type="module" src="js/core/app.js"></script>
 
 </body>
 
