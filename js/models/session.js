@@ -16,6 +16,10 @@ export default class Session {
 
         this.questionSolvedCount = 0;
 
+        this.firestoreId = null;
+
+this.lastSavedCheckpoint = 0;
+
     }
 
     add(answer) {

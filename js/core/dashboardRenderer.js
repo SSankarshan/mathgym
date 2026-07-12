@@ -114,7 +114,7 @@ function updateDashboardTitle(
     if (totalSessions === 0) {
 
         title.textContent =
-            "Mental Math Gym";
+            "Math Gym";
 
         return;
 
@@ -128,6 +128,6 @@ function updateDashboardTitle(
 
     title.textContent =
 
-        `Mental Math Gym • ${totalQuestions} Questions • ${totalMinutes} min`;
+        `Math Gym • ${totalQuestions} Questions • ${totalMinutes} min`;
 
 }

@@ -311,6 +311,30 @@ th {
 
 }
 
+.secondaryButton {
+
+    padding: 10px 18px;
+
+    margin-bottom: 15px;
+
+    border: 1px solid #bbbbbb;
+
+    border-radius: 8px;
+
+    background: rgb(237, 168, 6);
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+}
+
+.secondaryButton:hover {
+
+    background: #f5f5f5;
+
+}
+
 @media (max-width: 480px) {
 
     body {
@@ -342,6 +366,136 @@ th {
         height: 58px;
 
         font-size: 24px;
+
+    }
+
+    /* Desktop */
+
+.calculator {
+
+    display: grid;
+
+}
+
+/* Phones */
+
+@media (max-width: 768px) {
+
+    .calculator {
+
+        display: none;
+
+    }
+
+}
+
+}
+
+/* ===========================
+   Login
+=========================== */
+
+#loginScreen {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 100vh;
+
+    padding: 20px;
+
+    background: #f4f6f9;
+
+}
+
+.loginCard {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: rgb(49, 235, 7);
+
+    padding: 32px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
+}
+
+.loginCard h1 {
+
+    margin-top: 0;
+
+    margin-bottom: 8px;
+
+    text-align: center;
+
+}
+
+.loginSubtitle {
+
+    text-align: center;
+
+    color: #05e72b;
+
+    margin-bottom: 28px;
+
+}
+
+.loginCard input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    margin-bottom: 16px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+}
+
+.loginCard button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #1976d2;
+
+    color: rgb(56, 211, 13);
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+.loginCard button:hover {
+
+    background: #1565c0;
+
+}
+
+@media (max-width: 600px) {
+
+    .loginCard {
+
+        padding: 24px;
 
     }
 

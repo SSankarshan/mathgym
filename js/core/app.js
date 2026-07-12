@@ -205,7 +205,7 @@ document
 
     );
 
-    document
+document
 
     .getElementById("quitPracticeButton")
 
@@ -297,9 +297,9 @@ async function showQuestion() {
     const solvedQuestionCount =
         session.getQuestionSolvedCount();
 
-    
-        const totalQuestionCount =
-    session.originalQuestionCount;
+
+    const totalQuestionCount =
+        session.originalQuestionCount;
 
     progressElement.textContent =
         `${solvedQuestionCount + 1} / ${totalQuestionCount}`;
@@ -349,6 +349,7 @@ async function submit() {
         });
 
     sessionManager.addAnswer(answer);
+    await saveCheckpoint();
 
     handleAdaptiveQueue(answer);
 
@@ -422,7 +423,29 @@ async function finishSession() {
     session.statistics =
         calculate(session);
 
-    await storageManager.saveSession(session);
+    if (
+
+        session.firestoreId == null
+
+    ) {
+
+        await storageManager.createSession(
+
+            session
+
+        );
+
+    }
+
+    else {
+
+        await storageManager.updateSession(
+
+            session
+
+        );
+
+    }
 
     practiceScreen.hidden = true;
 
@@ -458,13 +481,80 @@ async function logoutUser() {
 
 }
 
+async function saveCheckpoint() {
+
+    const solved =
+        session.getQuestionSolvedCount();
+
+    const total =
+        session.originalQuestionCount;
+
+    const percent =
+        solved / total;
+
+    if (
+
+        percent >= 0.33 &&
+
+        session.lastSavedCheckpoint < 1
+
+    ) {
+
+        if (
+
+            session.firestoreId == null
+
+        ) {
+
+            await storageManager.createSession(
+
+                session
+
+            );
+
+        }
+
+        else {
+
+            await storageManager.updateSession(
+
+                session
+
+            );
+
+        }
+
+        session.lastSavedCheckpoint = 1;
+
+    }
+
+    else if (
+
+        percent >= 0.66 &&
+
+        session.lastSavedCheckpoint < 2
+
+    ) {
+
+        await storageManager.updateSession(
+
+            session
+
+        );
+
+        session.lastSavedCheckpoint = 2;
+
+    }
+
+}
+
 function quitPractice() {
 
     if (
 
         !confirm(
 
-            "Quit this practice session?"
+            "Quit this practice?\n\nYour progress in this session will not be saved."
 
         )
 
@@ -475,6 +565,12 @@ function quitPractice() {
     }
 
     sessionFinished = true;
+
+    session = null;
+
+    questionQueue = null;
+
+    sessionManager = null;
 
     practiceScreen.hidden = true;
 

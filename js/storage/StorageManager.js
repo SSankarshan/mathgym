@@ -24,6 +24,22 @@ import {
 
 } from "../firebase/auth.js";
 
+import {
+
+    collection,
+
+    addDoc
+
+} from "firebase/firestore";
+
+import {
+
+    doc,
+
+    updateDoc
+
+} from "firebase/firestore";
+
 export default class StorageManager {
 
     async loadSessions() {
@@ -62,17 +78,53 @@ export default class StorageManager {
 
     }
 
-    async saveSession(session) {
+    // async saveSession(session) {
 
-        const user =
-            getCurrentUser();
+    //     const user =
+    //         getCurrentUser();
 
-        if (!user) {
+    //     if (!user) {
 
-            return;
+    //         return;
 
-        }
+    //     }
 
+    //     await addDoc(
+
+    //         collection(
+
+    //             db,
+
+    //             "users",
+
+    //             user.uid,
+
+    //             "sessions"
+
+    //         ),
+
+    //         JSON.parse(
+
+    //             JSON.stringify(session)
+
+    //         )
+
+    //     );
+
+    // }
+
+    async createSession(session) {
+
+    const user =
+        getCurrentUser();
+
+    if (!user) {
+
+        return;
+
+    }
+
+    const docRef =
         await addDoc(
 
             collection(
@@ -95,7 +147,49 @@ export default class StorageManager {
 
         );
 
+    session.firestoreId =
+        docRef.id;
+
+}
+
+async updateSession(session) {
+
+    const user =
+        getCurrentUser();
+
+    if (!user) {
+
+        return;
+
     }
+
+    await updateDoc(
+
+        doc(
+
+            db,
+
+            "users",
+
+            user.uid,
+
+            "sessions",
+
+            session.firestoreId
+
+        ),
+
+        JSON.parse(
+
+            JSON.stringify(session)
+
+        )
+
+    );
+
+}
+
+
 
     async clearHistory() {
 
