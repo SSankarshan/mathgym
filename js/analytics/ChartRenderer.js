@@ -2,15 +2,13 @@ let accuracyChart = null;
 
 let speedChart = null;
 
-let weakTablesChart = null;
-
-let weakMultipliersChart = null;
+let weakItemsChart = null;
 
 export function renderCharts(
 
     trend,
 
-    weaknesses,
+    weakItems,
 
     mode
 
@@ -28,58 +26,12 @@ export function renderCharts(
 
     );
 
-    const weakTablesSection =
-        document.getElementById(
-            "weakTablesSection"
-        );
+    renderWeakItemsChart(
 
-    const weakMultipliersSection =
-        document.getElementById(
-            "weakMultipliersSection"
-        );
+        weakItems
+    );
 
-    if (mode === "TABLES") {
 
-        weakTablesSection.hidden = false;
-
-        weakMultipliersSection.hidden = false;
-
-        renderWeakTablesChart(
-
-            weaknesses.weakTables
-
-        );
-
-        renderWeakMultipliersChart(
-
-            weaknesses.weakMultipliers
-
-        );
-
-    }
-    else {
-
-        weakTablesSection.hidden = true;
-
-        weakMultipliersSection.hidden = true;
-
-        if (weakTablesChart) {
-
-            weakTablesChart.destroy();
-
-            weakTablesChart = null;
-
-        }
-
-        if (weakMultipliersChart) {
-
-            weakMultipliersChart.destroy();
-
-            weakMultipliersChart = null;
-
-        }
-
-    }
 
 }
 
@@ -331,26 +283,42 @@ function renderSpeedChart(
 
 }
 
-function renderWeakTablesChart(
+function renderWeakItemsChart(
 
-    weakTables
+    weakItems
 
 ) {
 
     const ctx =
+
         document
+
             .getElementById(
-                "weakTablesChart"
+
+                "weakItemsChart"
+
             )
-            .getContext("2d");
 
-    if (weakTablesChart) {
+            .getContext(
 
-        weakTablesChart.destroy();
+                "2d"
+
+            );
+
+    if (
+
+        weakItemsChart
+
+    ) {
+
+        weakItemsChart
+
+            .destroy();
 
     }
 
-    weakTablesChart =
+    weakItemsChart =
+
         new Chart(
 
             ctx,
@@ -363,13 +331,23 @@ function renderWeakTablesChart(
 
                     labels:
 
-                        weakTables.map(
+                        weakItems
 
-                            t =>
+                            .slice(
 
-                                t.key
+                                0,
 
-                        ),
+                                10
+
+                            )
+
+                            .map(
+
+                                x =>
+
+                                    x.key
+
+                            ),
 
                     datasets: [
 
@@ -377,115 +355,31 @@ function renderWeakTablesChart(
 
                             label:
 
-                                "Accuracy (%)",
+                                "Accuracy",
 
                             data:
 
-                                weakTables.map(
+                                weakItems
 
-                                    t =>
+                                    .slice(
 
-                                        t.accuracy
+                                        0,
 
-                                ),
+                                        10
+
+                                    )
+
+                                    .map(
+
+                                        x =>
+
+                                            x.accuracy
+
+                                    ),
 
                             backgroundColor:
 
                                 "#dc2626"
-
-                        }
-
-                    ]
-
-                },
-
-                options: {
-
-                    indexAxis: "y",
-
-                    responsive: true,
-
-                    scales: {
-
-                        x: {
-
-                            min: 0,
-
-                            max: 100
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        );
-
-}
-
-function renderWeakMultipliersChart(
-
-    weakMultipliers
-
-) {
-
-    const ctx =
-        document
-            .getElementById(
-                "weakMultipliersChart"
-            )
-            .getContext("2d");
-
-    if (weakMultipliersChart) {
-
-        weakMultipliersChart.destroy();
-
-    }
-
-    weakMultipliersChart =
-        new Chart(
-
-            ctx,
-
-            {
-
-                type: "bar",
-
-                data: {
-
-                    labels:
-
-                        weakMultipliers.map(
-
-                            t =>
-
-                                "×" + t.key
-
-                        ),
-
-                    datasets: [
-
-                        {
-
-                            label:
-
-                                "Accuracy (%)",
-
-                            data:
-
-                                weakMultipliers.map(
-
-                                    t =>
-
-                                        t.accuracy
-
-                                ),
-
-                            backgroundColor:
-
-                                "#f59e0b"
 
                         }
 

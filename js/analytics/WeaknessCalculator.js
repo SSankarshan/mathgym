@@ -1,200 +1,40 @@
-export function calculateWeaknesses(sessions) {
+export function calculateWeakItems(
 
-    return {
+    sessions
 
-        weakTables:
-            aggregateTables(sessions),
-
-        weakMultipliers:
-            aggregateMultipliers(sessions),
-
-        slowQuestions:
-            aggregateSlowQuestions(sessions)
-
-    };
-
-}
-
-function aggregateTables(sessions) {
+) {
 
     const map = new Map();
 
-    for (const session of sessions) {
+    for (
 
-        const list =
-            session.statistics?.weakTables ?? [];
+        const session of sessions
 
-        for (const table of list) {
+    ) {
 
-            if (!map.has(table.table)) {
+        for (
 
-                map.set(table.table, {
+            const answer of session.answers
 
-                    key: table.table,
-
-                    attempts: 0,
-
-                    accuracySum: 0,
-
-                    timeSum: 0
-
-                });
-
-            }
-
-            const stats =
-                map.get(table.table);
-
-            stats.attempts++;
-
-            stats.accuracySum +=
-                table.accuracy;
-
-            stats.timeSum +=
-                table.averageTime;
-
-        }
-
-    }
-
-    return [...map.values()]
-
-        .map(item => ({
-
-            key: item.key,
-
-            attempts: item.attempts,
-
-            accuracy:
-
-                item.accuracySum /
-
-                item.attempts,
-
-            averageTime:
-
-                item.timeSum /
-
-                item.attempts
-
-        }))
-
-        .sort(
-
-            (a, b) =>
-
-                a.accuracy -
-
-                b.accuracy
-
-        );
-
-}
-
-function aggregateMultipliers(sessions) {
-
-    const map = new Map();
-
-    for (const session of sessions) {
-
-        const list =
-            session.statistics?.weakMultipliers ?? [];
-
-        for (const multiplier of list) {
-
-            if (!map.has(multiplier.multiplier)) {
-
-                map.set(
-
-                    multiplier.multiplier,
-
-                    {
-
-                        key:
-                            multiplier.multiplier,
-
-                        attempts: 0,
-
-                        accuracySum: 0,
-
-                        timeSum: 0
-
-                    }
-
-                );
-
-            }
-
-            const stats =
-                map.get(
-
-                    multiplier.multiplier
-
-                );
-
-            stats.attempts++;
-
-            stats.accuracySum +=
-
-                multiplier.accuracy;
-
-            stats.timeSum +=
-
-                multiplier.averageTime;
-
-        }
-
-    }
-
-    return [...map.values()]
-
-        .map(item => ({
-
-            key: item.key,
-
-            attempts: item.attempts,
-
-            accuracy:
-
-                item.accuracySum /
-
-                item.attempts,
-
-            averageTime:
-
-                item.timeSum /
-
-                item.attempts
-
-        }))
-
-        .sort(
-
-            (a, b) =>
-
-                a.accuracy -
-
-                b.accuracy
-
-        );
-
-}
-
-function aggregateSlowQuestions(sessions) {
-
-    const map = new Map();
-
-    for (const session of sessions) {
-
-        const list =
-            session.statistics?.slowestQuestions ?? [];
-
-        for (const item of list) {
+        ) {
 
             const key =
-                item.question.display;
 
-            if (!map.has(key)) {
+                answer.question
+
+                    ?.weaknessKey;
+
+            if (!key) {
+
+                continue;
+
+            }
+
+            if (
+
+                !map.has(key)
+
+            ) {
 
                 map.set(
 
@@ -202,7 +42,7 @@ function aggregateSlowQuestions(sessions) {
 
                     {
 
-                        question: key,
+                        key,
 
                         attempts: 0,
 
@@ -216,49 +56,61 @@ function aggregateSlowQuestions(sessions) {
 
             }
 
-            const stats =
+            const stat =
+
                 map.get(key);
 
-            stats.attempts++;
+            stat.attempts++;
 
-            if (item.correct) {
+            if (
 
-                stats.correct++;
+                answer.correct
+
+            ) {
+
+                stat.correct++;
 
             }
 
-            stats.totalTime +=
-                item.responseTimeMs;
+            stat.totalTime +=
+
+                answer.responseTimeMs;
 
         }
 
     }
 
-    return [...map.values()]
+    return [
+
+        ...map.values()
+
+    ]
 
         .map(
 
-            stats => ({
+            item => ({
 
-                question:
-                    stats.question,
+                key:
+
+                    item.key,
 
                 attempts:
-                    stats.attempts,
+
+                    item.attempts,
 
                 accuracy:
 
-                    stats.correct *
+                    item.correct *
 
                     100 /
 
-                    stats.attempts,
+                    item.attempts,
 
                 averageTime:
 
-                    stats.totalTime /
+                    item.totalTime /
 
-                    stats.attempts
+                    item.attempts
 
             })
 
@@ -267,6 +119,10 @@ function aggregateSlowQuestions(sessions) {
         .sort(
 
             (a, b) =>
+
+                a.accuracy -
+
+                b.accuracy ||
 
                 b.averageTime -
 

@@ -78,7 +78,10 @@ export function generate(customConfig = CONFIG.tables) {
 
                             ? 3
 
-                            : 2
+                            : 2,
+                    weaknessKey: 
+                        
+                        `${operand1}`
 
                 })
 

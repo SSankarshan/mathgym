@@ -42,7 +42,9 @@ export function generate() {
                 difficulty:
                     calculateDifficulty(
                         denominator
-                    )
+                    ), weaknessKey:
+
+                    `${numerator}/${denominator}`
 
             })
 

@@ -42,7 +42,9 @@ export function generate(customConfig = CONFIG.ratios) {
 
                 difficulty:
 
-                    ratio.difficulty
+                    ratio.difficulty, weaknessKey:
+
+                    `${ratio.a}:${ratio.b}`
 
             })
 

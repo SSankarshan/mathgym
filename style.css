@@ -642,3 +642,33 @@ td {
     margin-top: 24px;
 
 }
+
+#analyticsScreen {
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    text-align: center;
+
+}
+
+.analyticsSection {
+
+    margin: 32px auto;
+
+}
+
+.analyticsCard {
+
+    margin: 0 auto;
+
+    max-width: 500px;
+
+}
+
+canvas {
+
+    margin: 20px auto;
+
+}

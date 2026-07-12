@@ -34,7 +34,7 @@ import {
 } from "../analytics/AnalyticsRenderer.js";
 
 import {
-    calculateWeaknesses
+    calculateWeakItems
 } from "../analytics/WeaknessCalculator.js";
 
 import { calculateTrend }
@@ -875,10 +875,12 @@ async function showAnalytics(mode) {
     const trend =
         calculateTrend(topicSessions);
 
-    const weaknesses =
-        calculateWeaknesses(
-            topicSessions
-        );
+    const weakItems =
+    calculateWeakItems(
+
+        topicSessions
+
+    );
 
     dashboardScreen.hidden = true;
 
@@ -900,7 +902,8 @@ async function showAnalytics(mode) {
         summary,
 
         trend,
-        weaknesses
+
+        weakItems
 
     );
 
@@ -908,7 +911,7 @@ async function showAnalytics(mode) {
 
         trend,
 
-        weaknesses,
+        weakItems,
 
         mode
 

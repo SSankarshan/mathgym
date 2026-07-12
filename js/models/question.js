@@ -14,7 +14,9 @@ export default class Question {
 
         topic,
 
-        difficulty
+        difficulty,
+
+        weaknessKey
 
     }) {
 
@@ -31,6 +33,8 @@ export default class Question {
         this.topic = topic;
 
         this.difficulty = difficulty;
+
+        this.weaknessKey = weaknessKey;
 
     }
 

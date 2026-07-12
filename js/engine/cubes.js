@@ -40,7 +40,11 @@ export function generate(customConfig = CONFIG.cubes) {
                         ? 1
                         : number <= 20
                             ? 2
-                            : 3
+                            : 3,
+
+                weaknessKey:
+
+                    `${number}`
 
             })
 
