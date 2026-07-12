@@ -25,6 +25,29 @@ import {
 
 } from "../firebase/auth.js";
 
+import {
+    calculateSummary
+} from "../analytics/SummaryCalculator.js";
+
+import {
+    renderSummary
+} from "../analytics/AnalyticsRenderer.js";
+
+import {
+    calculateWeaknesses
+} from "../analytics/WeaknessCalculator.js";
+
+
+const analyticsScreen =
+    document.getElementById(
+        "analyticsScreen"
+    );
+
+const analyticsTitle =
+    document.getElementById(
+        "analyticsTitle"
+    );
+
 
 const loginScreen =
     document.getElementById(
@@ -59,6 +82,8 @@ const progressElement =
 const answerInput =
     document.getElementById("answer");
 
+
+
 let storageManager;
 
 let guestMode = false;
@@ -79,7 +104,7 @@ initializeCalculator(submit);
 
 observeAuthState(
 
-    (user) => {
+    async (user) => {
 
         if (guestMode) {
 
@@ -100,7 +125,7 @@ observeAuthState(
 
             resultScreen.hidden = true;
 
-            renderDashboard(
+            await renderDashboard(
 
                 storageManager
 
@@ -126,11 +151,31 @@ observeAuthState(
 
 // renderDashboard(storageManager);
 
+// document
+//     .getElementById("tablesButton")
+//     .addEventListener(
+//         "click",
+//         async () => startPractice("TABLES")
+//     );
+
 document
     .getElementById("tablesButton")
     .addEventListener(
         "click",
         async () => startPractice("TABLES")
+    );
+
+document
+    .getElementById("analyticsBackButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            analyticsScreen.hidden = true;
+
+            dashboardScreen.hidden = false;
+
+        }
     );
 
 document
@@ -203,7 +248,7 @@ document
 
     );
 
-    document
+document
 
     .getElementById(
 
@@ -243,6 +288,13 @@ document
 
     );
 
+    document
+    .getElementById("testAnalyticsButton")
+    ?.addEventListener(
+        "click",
+        async () => showAnalytics("TABLES")
+    );
+
 async function login() {
 
     try {
@@ -267,7 +319,7 @@ async function login() {
 
 }
 
-function guestLogin() {
+async function guestLogin() {
 
     guestMode = true;
 
@@ -282,11 +334,11 @@ function guestLogin() {
 
     resultScreen.hidden = true;
 
-    renderDashboard(storageManager);
+    await renderDashboard(storageManager);
 
 }
 
-async function startPractice(practiceType) {
+async function startPractice(mode) {
 
     dashboardScreen.hidden = true;
 
@@ -297,10 +349,10 @@ async function startPractice(practiceType) {
     sessionFinished = false;
 
     session =
-        new Session(practiceType);
+        new Session(mode);
 
     const questions =
-        generateQuestions(practiceType);
+        generateQuestions(mode);
 
     session.originalQuestionCount =
         questions.length;
@@ -502,13 +554,13 @@ async function finishSession() {
 
 }
 
-function backToDashboard() {
+async function backToDashboard() {
 
     resultScreen.hidden = true;
 
     dashboardScreen.hidden = false;
 
-    renderDashboard(storageManager);
+    await renderDashboard(storageManager);
 
 }
 
@@ -613,7 +665,7 @@ async function saveCheckpoint() {
 
 }
 
-function quitPractice() {
+async function quitPractice() {
 
     if (
 
@@ -643,6 +695,43 @@ function quitPractice() {
 
     dashboardScreen.hidden = false;
 
-    renderDashboard(storageManager);
+    await renderDashboard(storageManager);
+
+}
+
+async function showAnalytics(mode) {
+
+    const allSessions =
+        await storageManager.loadSessions();
+
+    const topicSessions =
+        allSessions.filter(
+            s => s.mode === mode
+        );
+
+    const summary =
+        calculateSummary(topicSessions);
+
+    const weaknesses =
+        calculateWeaknesses(topicSessions);
+
+    dashboardScreen.hidden = true;
+
+    practiceScreen.hidden = true;
+
+    resultScreen.hidden = true;
+
+    analyticsScreen.hidden = false;
+
+    analyticsTitle.textContent =
+        mode + " Analytics";
+
+    renderSummary(
+
+        summary,
+
+        weaknesses
+
+    );
 
 }

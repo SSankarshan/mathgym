@@ -581,3 +581,54 @@ td {
     }
 
 }
+
+
+/* ==========================
+   Analytics
+========================== */
+
+.analyticsSection {
+
+    margin-bottom: 24px;
+
+}
+
+.analyticsSection h2 {
+
+    margin-bottom: 12px;
+
+}
+
+.analyticsCard {
+
+    background: #1e293b;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+}
+
+.analyticsRow {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin: 6px 0;
+
+}
+
+.analyticsLabel {
+
+    color: #94a3b8;
+
+}
+
+.analyticsValue {
+
+    font-weight: bold;
+
+}

@@ -1,9 +1,9 @@
 import { formatTime } from "../utils/formatTime.js";
 
-export function renderDashboard(storageManager) {
+export async function renderDashboard(storageManager) {
 
     const sessionList =
-        storageManager.loadSessions();
+        await storageManager.loadSessions();
 
     let totalSessions = sessionList.length;
 
@@ -18,7 +18,9 @@ export function renderDashboard(storageManager) {
     sessionList.forEach(session => {
 
         if (!session.statistics) {
+
             return;
+
         }
 
         totalQuestions +=
@@ -36,7 +38,7 @@ export function renderDashboard(storageManager) {
 
             fastestAverageTime,
 
-            session.statistics.averageTime
+            session.statistics.averageResponseTimeMs
 
         );
 
