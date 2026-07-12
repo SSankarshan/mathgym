@@ -132,9 +132,17 @@
 
                 </div>
 
-                <button id="testAnalyticsButton">
-    Tables Analytics (Dev)
-</button>
+
+
+            </div>
+
+            <div class="analyticsButtonContainer">
+
+                <button id="analyticsButton" class="practiceButton">
+
+                    📊 Analytics
+
+                </button>
 
             </div>
 
@@ -150,15 +158,14 @@
 
             </h2>
 
+
+
             <div class="practiceGrid">
 
                 <button id="tablesButton" class="practiceButton">
 
                     <strong>Tables</strong>
 
-                    <br>
-
-                    2 - 20 × 2 - 10
 
                 </button>
 
@@ -166,9 +173,6 @@
 
                     <strong>Squares</strong>
 
-                    <br>
-
-                    2² - 50²
 
                 </button>
 
@@ -176,9 +180,6 @@
 
                     <strong>Cubes</strong>
 
-                    <br>
-
-                    2³ - 30³
 
                 </button>
 
@@ -218,7 +219,7 @@
 
                     <br>
 
-                    Coming Soon
+                    Ratio → %
 
                 </button>
 
@@ -228,7 +229,7 @@
 
                     <br>
 
-                    Coming Soon
+                    All Topics
 
                 </button>
 
@@ -245,6 +246,77 @@
     <!-- Practice -->
     <!-- ====================================================== -->
 
+    <div id="analyticsMenuScreen" hidden>
+
+        <div class="container">
+
+            <h1>
+
+                Analytics
+
+            </h1>
+
+            <button id="backToDashboardButton" class="secondaryButton">
+
+                ← Back
+
+            </button>
+
+            <div class="practiceGrid">
+
+                <button id="tablesAnalyticsButton" class="practiceButton">
+
+                    Tables
+
+                </button>
+
+                <button id="squaresAnalyticsButton" class="practiceButton">
+
+                    Squares
+
+                </button>
+
+                <button id="cubesAnalyticsButton" class="practiceButton">
+
+                    Cubes
+
+                </button>
+
+                <button id="squareRootsAnalyticsButton" class="practiceButton">
+
+                    Square Roots
+
+                </button>
+
+                <button id="cubeRootsAnalyticsButton" class="practiceButton">
+
+                    Cube Roots
+
+                </button>
+
+                <button id="equivalentsAnalyticsButton" class="practiceButton">
+
+                    Equivalents
+
+                </button>
+
+                <button id="ratiosAnalyticsButton" class="practiceButton">
+
+                    Ratios
+
+                </button>
+
+                <button id="mixedAnalyticsButton" class="practiceButton">
+
+                    Mixed
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
     <div id="practiceScreen" hidden>
 
         <div class="container">
@@ -369,6 +441,30 @@
 
             </h1>
 
+            <h2>Accuracy Trend</h2>
+
+            <canvas id="accuracyChart"></canvas>
+
+            <h2>Solving Speed (Questions / Minute)</h2>
+
+            <canvas id="speedChart"></canvas>
+
+            <div id="weakTablesSection">
+
+                <h2>Weak Tables</h2>
+
+                <canvas id="weakTablesChart"></canvas>
+
+            </div>
+
+            <div id="weakMultipliersSection">
+
+                <h2>Weak Multipliers</h2>
+
+                <canvas id="weakMultipliersChart"></canvas>
+
+            </div>
+
             <div id="analyticsContent"></div>
 
             <button id="analyticsBackButton">
@@ -381,6 +477,7 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="js/core/app.js"></script>
 
 </body>

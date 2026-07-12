@@ -28,7 +28,7 @@ export const CONFIG = {
 
         minNumber: 2,
 
-        maxNumber: 50
+        maxNumber: 25
 
     },
 
@@ -36,7 +36,7 @@ export const CONFIG = {
 
         minNumber: 2,
 
-        maxNumber: 30
+        maxNumber: 20
 
     },
 
@@ -44,7 +44,7 @@ export const CONFIG = {
 
         minNumber: 2,
 
-        maxNumber: 100
+        maxNumber: 25
 
     },
 
@@ -52,7 +52,135 @@ export const CONFIG = {
 
         minNumber: 2,
 
-        maxNumber: 30
+        maxNumber: 20
+
+    },
+
+    ratios: {
+
+        ratios: [
+
+            {
+
+                a: 1,
+
+                b: 2,
+
+                percentage: 50,
+
+                difficulty: 1
+
+            },
+
+            {
+
+                a: 1,
+
+                b: 3,
+
+                percentage: 33.33,
+
+                difficulty: 2
+
+            },
+
+            {
+
+                a: 2,
+
+                b: 3,
+
+                percentage: 66.67,
+
+                difficulty: 2
+
+            },
+
+            {
+
+                a: 3,
+
+                b: 4,
+
+                percentage: 75,
+
+                difficulty: 1
+
+            },
+
+            {
+
+                a: 4,
+
+                b: 5,
+
+                percentage: 80,
+
+                difficulty: 1
+
+            },
+
+            {
+
+                a: 5,
+
+                b: 8,
+
+                percentage: 62.5,
+
+                difficulty: 2
+
+            },
+
+            {
+
+                a: 3,
+
+                b: 5,
+
+                percentage: 60,
+
+                difficulty: 1
+
+            },
+
+            {
+
+                a: 7,
+
+                b: 8,
+
+                percentage: 87.5,
+
+                difficulty: 3
+
+            },
+
+            {
+
+                a: 5,
+
+                b: 6,
+
+                percentage: 83.33,
+
+                difficulty: 3
+
+            },
+
+            {
+
+                a: 7,
+
+                b: 10,
+
+                percentage: 70,
+
+                difficulty: 1
+
+            }
+
+        ]
 
     },
 
@@ -79,6 +207,12 @@ export const CONFIG = {
             100
 
         ]
+
+    },
+
+    mixedMemory: {
+
+        questionCount: 100
 
     },
 

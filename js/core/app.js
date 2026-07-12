@@ -37,6 +37,17 @@ import {
     calculateWeaknesses
 } from "../analytics/WeaknessCalculator.js";
 
+import { calculateTrend }
+
+    from "../analytics/TrendCalculator.js";
+
+import {
+
+    renderCharts
+
+}
+
+    from "../analytics/ChartRenderer.js";
 
 const analyticsScreen =
     document.getElementById(
@@ -82,7 +93,10 @@ const progressElement =
 const answerInput =
     document.getElementById("answer");
 
-
+const analyticsMenuScreen =
+    document.getElementById(
+        "analyticsMenuScreen"
+    );
 
 let storageManager;
 
@@ -159,6 +173,47 @@ observeAuthState(
 //     );
 
 document
+    .getElementById(
+        "analyticsButton"
+    )
+    ?.addEventListener(
+
+        "click",
+
+        () => {
+
+            dashboardScreen.hidden = true;
+
+            practiceScreen.hidden = true;
+
+            resultScreen.hidden = true;
+
+            analyticsScreen.hidden = true;
+
+            analyticsMenuScreen.hidden = false;
+
+        }
+
+    );
+
+document
+    .getElementById(
+        "backToDashboardButton"
+    )
+    ?.addEventListener(
+
+        "click",
+
+        () => {
+
+            analyticsMenuScreen.hidden = true;
+
+            dashboardScreen.hidden = false;
+
+        }
+
+    );
+document
     .getElementById("tablesButton")
     .addEventListener(
         "click",
@@ -196,14 +251,14 @@ document
     .getElementById("squareRootsButton")
     ?.addEventListener(
         "click",
-        async () => startPractice("SQUARE_ROOTS")
+        async () => startPractice("SQUAREROOTS")
     );
 
 document
     .getElementById("cubeRootsButton")
     ?.addEventListener(
         "click",
-        async () => startPractice("CUBE_ROOTS")
+        async () => startPractice("CUBEROOTS")
     );
 
 
@@ -218,14 +273,14 @@ document
     .getElementById("ratiosButton")
     ?.addEventListener(
         "click",
-        async () => alert("Coming Soon")
+        async () => startPractice("RATIOS")
     );
 
 document
     .getElementById("mixedButton")
     ?.addEventListener(
         "click",
-        async () => alert("Coming Soon")
+        async () => startPractice("MIXED")
     );
 
 document
@@ -288,7 +343,7 @@ document
 
     );
 
-    document
+document
     .getElementById("testAnalyticsButton")
     ?.addEventListener(
         "click",
@@ -699,6 +754,111 @@ async function quitPractice() {
 
 }
 
+function registerAnalyticsButton(
+
+    buttonId,
+
+    mode
+
+) {
+
+    const button =
+
+        document.getElementById(
+
+            buttonId
+
+        );
+
+    if (!button) {
+
+        return;
+
+    }
+
+    button.addEventListener(
+
+        "click",
+
+        async () => {
+
+            await showAnalytics(
+
+                mode
+
+            );
+
+        }
+
+    );
+
+}
+
+registerAnalyticsButton(
+
+    "tablesAnalyticsButton",
+
+    "TABLES"
+
+);
+
+registerAnalyticsButton(
+
+    "squaresAnalyticsButton",
+
+    "SQUARES"
+
+);
+
+registerAnalyticsButton(
+
+    "cubesAnalyticsButton",
+
+    "CUBES"
+
+);
+
+registerAnalyticsButton(
+
+    "squareRootsAnalyticsButton",
+
+    "SQUAREROOTS"
+
+);
+
+registerAnalyticsButton(
+
+    "cubeRootsAnalyticsButton",
+
+    "CUBEROOTS"
+
+);
+
+registerAnalyticsButton(
+
+    "equivalentsAnalyticsButton",
+
+    "EQUIVALENTS"
+
+);
+
+registerAnalyticsButton(
+
+    "ratiosAnalyticsButton",
+
+    "RATIOS"
+
+);
+
+registerAnalyticsButton(
+
+    "mixedAnalyticsButton",
+
+    "MIXED"
+
+);
+
+
 async function showAnalytics(mode) {
 
     const allSessions =
@@ -712,14 +872,23 @@ async function showAnalytics(mode) {
     const summary =
         calculateSummary(topicSessions);
 
+    const trend =
+        calculateTrend(topicSessions);
+
     const weaknesses =
-        calculateWeaknesses(topicSessions);
+        calculateWeaknesses(
+            topicSessions
+        );
 
     dashboardScreen.hidden = true;
 
     practiceScreen.hidden = true;
 
     resultScreen.hidden = true;
+
+    analyticsScreen.hidden = false;
+
+    analyticsMenuScreen.hidden = true;
 
     analyticsScreen.hidden = false;
 
@@ -730,7 +899,18 @@ async function showAnalytics(mode) {
 
         summary,
 
+        trend,
         weaknesses
+
+    );
+
+    renderCharts(
+
+        trend,
+
+        weaknesses,
+
+        mode
 
     );
 

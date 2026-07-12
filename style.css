@@ -632,3 +632,13 @@ td {
     font-weight: bold;
 
 }
+
+.analyticsButtonContainer {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 24px;
+
+}

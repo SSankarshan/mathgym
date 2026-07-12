@@ -1,4 +1,10 @@
-export function renderSummary(summary, weaknesses) {
+export function renderSummary(
+
+    summary,
+
+    trend
+
+) {
 
     const analytics =
         document.getElementById(
@@ -24,13 +30,33 @@ export function renderSummary(summary, weaknesses) {
 </div>
 
 <div class="analyticsRow">
-<span class="analyticsLabel">Accuracy</span>
+<span class="analyticsLabel">Correct</span>
+<span class="analyticsValue">${summary.totalCorrect}</span>
+</div>
+
+<div class="analyticsRow">
+<span class="analyticsLabel">Wrong</span>
+<span class="analyticsValue">${summary.totalWrong}</span>
+</div>
+
+<div class="analyticsRow">
+<span class="analyticsLabel">Practice Days</span>
+<span class="analyticsValue">${summary.practiceDays}</span>
+</div>
+
+<div class="analyticsRow">
+<span class="analyticsLabel">Average Accuracy</span>
 <span class="analyticsValue">${summary.averageAccuracy.toFixed(1)}%</span>
 </div>
 
 <div class="analyticsRow">
-<span class="analyticsLabel">Average Time</span>
-<span class="analyticsValue">${(summary.averageResponseTimeMs/1000).toFixed(2)} sec</span>
+<span class="analyticsLabel">Best Accuracy</span>
+<span class="analyticsValue">${summary.bestAccuracy.toFixed(1)}%</span>
+</div>
+
+<div class="analyticsRow">
+<span class="analyticsLabel">Average Speed</span>
+<span class="analyticsValue">${(60000 / summary.averageResponseTimeMs).toFixed(2)} Questions / Minute</span>
 </div>
 
 </div>
@@ -39,73 +65,47 @@ export function renderSummary(summary, weaknesses) {
 
 <div class="analyticsSection">
 
-<h2>Weak Tables</h2>
+<h2>Improvement Trend</h2>
 
-${weaknesses.weakTables
-.slice(0,5)
-.map(table => `
+<table>
 
-<div class="analyticsCard">
+<tr>
 
-<b>Table ${table.key}</b><br>
+<th>#</th>
 
-Accuracy :
-${table.accuracy.toFixed(1)}%<br>
+<th>Date</th>
 
-Average Time :
-${(table.averageTime/1000).toFixed(2)} sec
+<th>Accuracy</th>
 
-</div>
+<th>Avg Time</th>
 
-`).join("")}
+<th>Questions</th>
 
-</div>
+</tr>
 
-<div class="analyticsSection">
+${trend.map(
 
-<h2>Weak Multipliers</h2>
+session => `
 
-${weaknesses.weakMultipliers
-.slice(0,5)
-.map(m => `
+<tr>
 
-<div class="analyticsCard">
+<td>${session.sessionNumber}</td>
 
-<b>${m.key}</b><br>
+<td>${session.date}</td>
 
-Accuracy :
-${m.accuracy.toFixed(1)}%<br>
+<td>${session.accuracy.toFixed(1)}%</td>
 
-Average Time :
-${(m.averageTime/1000).toFixed(2)} sec
+<td>${(session.averageTimeMs / 1000).toFixed(2)} sec</td>
 
-</div>
+<td>${session.questions}</td>
 
-`).join("")}
+</tr>
 
-</div>
+`
 
-<div class="analyticsSection">
+).join("")}
 
-<h2>Hardest Questions</h2>
-
-${weaknesses.slowQuestions
-.slice(0,5)
-.map(q => `
-
-<div class="analyticsCard">
-
-<b>${q.question}</b><br>
-
-Accuracy :
-${q.accuracy.toFixed(1)}%<br>
-
-Average Time :
-${(q.averageTime/1000).toFixed(2)} sec
-
-</div>
-
-`).join("")}
+</table>
 
 </div>
 
