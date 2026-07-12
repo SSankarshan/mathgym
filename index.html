@@ -1,57 +1,73 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Math Gym</title>
 
     <link rel="stylesheet" href="style.css">
 
 </head>
-
 <body>
 
-    <div class="container">
+    <!-- ====================================================== -->
+    <!-- Login -->
+    <!-- ====================================================== -->
 
-        <div class="loginCard">
+    <div id="loginScreen">
 
-            <h1>
+        <div class="container">
 
-                Math Gym
+            <div class="loginCard">
 
-            </h1>
+                <h1>Math Gym</h1>
 
-            <p class="loginSubtitle">
+                <p class="loginSubtitle">
 
-                Train • Measure • Improve
+                    Train • Measure • Improve
 
-            </p>
+                </p>
 
-            <input id="email" type="email" placeholder="Email" autocomplete="email">
+                <input id="email" type="email" placeholder="Email" autocomplete="email">
 
-            <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+                <input id="password" type="password" placeholder="Password" autocomplete="current-password">
 
-            <button id="loginButton">
+                <button id="loginButton">
 
-                Login
+                    Login
 
-            </button>
+                </button>
+
+                <button id="guestButton">
+
+                    Continue as Guest
+
+                </button>
+
+            </div>
 
         </div>
-        <!-- ====================================================== -->
-        <!-- Dashboard -->
-        <!-- ====================================================== -->
 
-        <div id="dashboardScreen" hidden>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- Dashboard -->
+    <!-- ====================================================== -->
+
+    <div id="dashboardScreen" hidden>
+
+        <div class="container">
 
             <h1>Math Gym</h1>
 
             <div class="dashboard">
-
 
                 <div class="dashboardCard">
 
@@ -131,8 +147,6 @@
 
             </h2>
 
-
-
             <div class="practiceGrid">
 
                 <button id="tablesButton" class="practiceButton">
@@ -151,7 +165,7 @@
 
                     <br>
 
-                    2² - 100²
+                    2² - 50²
 
                 </button>
 
@@ -194,6 +208,7 @@
                     Fraction / % → Decimal
 
                 </button>
+
                 <button id="ratiosButton" class="practiceButton">
 
                     <strong>Ratios</strong>
@@ -218,11 +233,18 @@
 
         </div>
 
-        <!-- ====================================================== -->
-        <!-- Practice -->
-        <!-- ====================================================== -->
+    </div>
 
-        <div id="practiceScreen" hidden>
+    <!-- ====================================================== -->
+    <!-- Practice -->
+    <!-- ====================================================== -->
+    <!-- ====================================================== -->
+    <!-- Practice -->
+    <!-- ====================================================== -->
+
+    <div id="practiceScreen" hidden>
+
+        <div class="container">
 
             <h1>
 
@@ -282,11 +304,15 @@
 
         </div>
 
-        <!-- ====================================================== -->
-        <!-- Results -->
-        <!-- ====================================================== -->
+    </div>
 
-        <div id="resultScreen" hidden>
+    <!-- ====================================================== -->
+    <!-- Results -->
+    <!-- ====================================================== -->
+
+    <div id="resultScreen" hidden>
+
+        <div class="container">
 
             <h1>
 
@@ -330,9 +356,7 @@
 
     </div>
 
-    <script type="module" src="js/core/app.js">
-
-    </script>
+    <script type="module" src="js/core/app.js"></script>
 
 </body>
 

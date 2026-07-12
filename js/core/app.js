@@ -59,8 +59,9 @@ const progressElement =
 const answerInput =
     document.getElementById("answer");
 
-const storageManager =
-    new StorageManager();
+let storageManager;
+
+let guestMode = false;
 
 let session = null;
 
@@ -80,15 +81,24 @@ observeAuthState(
 
     (user) => {
 
+        if (guestMode) {
+
+            return;
+
+        }
+
         if (user) {
+
+            storageManager =
+                new StorageManager(false);
 
             loginScreen.hidden = true;
 
             dashboardScreen.hidden = false;
 
-            resultScreen.hidden = true;
-
             practiceScreen.hidden = true;
+
+            resultScreen.hidden = true;
 
             renderDashboard(
 
@@ -104,9 +114,9 @@ observeAuthState(
 
             dashboardScreen.hidden = true;
 
-            resultScreen.hidden = true;
-
             practiceScreen.hidden = true;
+
+            resultScreen.hidden = true;
 
         }
 
@@ -193,6 +203,22 @@ document
 
     );
 
+    document
+
+    .getElementById(
+
+        "guestButton"
+
+    )
+
+    .addEventListener(
+
+        "click",
+
+        guestLogin
+
+    );
+
 document
 
     .getElementById("logoutButton")
@@ -221,6 +247,8 @@ async function login() {
 
     try {
 
+        guestMode = false;
+
         await loginUser(
 
             emailInput.value.trim(),
@@ -236,6 +264,25 @@ async function login() {
         alert(error.message);
 
     }
+
+}
+
+function guestLogin() {
+
+    guestMode = true;
+
+    storageManager =
+        new StorageManager(true);
+
+    loginScreen.hidden = true;
+
+    dashboardScreen.hidden = false;
+
+    practiceScreen.hidden = true;
+
+    resultScreen.hidden = true;
+
+    renderDashboard(storageManager);
 
 }
 
@@ -466,6 +513,24 @@ function backToDashboard() {
 }
 
 async function logoutUser() {
+
+    if (guestMode) {
+
+        guestMode = false;
+
+        storageManager = null;
+
+        loginScreen.hidden = false;
+
+        dashboardScreen.hidden = true;
+
+        practiceScreen.hidden = true;
+
+        resultScreen.hidden = true;
+
+        return;
+
+    }
 
     try {
 

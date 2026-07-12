@@ -1,251 +1,48 @@
-import {
+import FirestoreStorageManager from "./FirestoreStorageManager.js";
 
-    collection,
-
-    addDoc,
-
-    getDocs,
-
-    deleteDoc,
-
-    doc
-
-} from "firebase/firestore";
-
-import {
-
-    db
-
-} from "../firebase/firestore.js";
-
-import {
-
-    getCurrentUser
-
-} from "../firebase/auth.js";
-
-import {
-
-    collection,
-
-    addDoc
-
-} from "firebase/firestore";
-
-import {
-
-    doc,
-
-    updateDoc
-
-} from "firebase/firestore";
+import LocalStorageStorageManager from "./LocalStorageStorageManager.js";
 
 export default class StorageManager {
 
-    async loadSessions() {
+    constructor(isGuest) {
 
-        const user =
-            getCurrentUser();
+        if (isGuest) {
 
-        if (!user) {
-
-            return [];
+            this.impl =
+                new LocalStorageStorageManager();
 
         }
 
-        const snapshot =
-            await getDocs(
+        else {
 
-                collection(
-
-                    db,
-
-                    "users",
-
-                    user.uid,
-
-                    "sessions"
-
-                )
-
-            );
-
-        return snapshot.docs.map(
-
-            doc => doc.data()
-
-        );
-
-    }
-
-    // async saveSession(session) {
-
-    //     const user =
-    //         getCurrentUser();
-
-    //     if (!user) {
-
-    //         return;
-
-    //     }
-
-    //     await addDoc(
-
-    //         collection(
-
-    //             db,
-
-    //             "users",
-
-    //             user.uid,
-
-    //             "sessions"
-
-    //         ),
-
-    //         JSON.parse(
-
-    //             JSON.stringify(session)
-
-    //         )
-
-    //     );
-
-    // }
-
-    async createSession(session) {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) {
-
-        return;
-
-    }
-
-    const docRef =
-        await addDoc(
-
-            collection(
-
-                db,
-
-                "users",
-
-                user.uid,
-
-                "sessions"
-
-            ),
-
-            JSON.parse(
-
-                JSON.stringify(session)
-
-            )
-
-        );
-
-    session.firestoreId =
-        docRef.id;
-
-}
-
-async updateSession(session) {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) {
-
-        return;
-
-    }
-
-    await updateDoc(
-
-        doc(
-
-            db,
-
-            "users",
-
-            user.uid,
-
-            "sessions",
-
-            session.firestoreId
-
-        ),
-
-        JSON.parse(
-
-            JSON.stringify(session)
-
-        )
-
-    );
-
-}
-
-
-
-    async clearHistory() {
-
-        const user =
-            getCurrentUser();
-
-        if (!user) {
-
-            return;
+            this.impl =
+                new FirestoreStorageManager();
 
         }
 
-        const snapshot =
-            await getDocs(
+    }
 
-                collection(
+    loadSessions() {
 
-                    db,
+        return this.impl.loadSessions();
 
-                    "users",
+    }
 
-                    user.uid,
+    createSession(session) {
 
-                    "sessions"
+        return this.impl.createSession(session);
 
-                )
+    }
 
-            );
+    updateSession(session) {
 
-        for (
+        return this.impl.updateSession(session);
 
-            const session of
+    }
 
-            snapshot.docs
+    clearHistory() {
 
-        ) {
-
-            await deleteDoc(
-
-                doc(
-
-                    db,
-
-                    "users",
-
-                    user.uid,
-
-                    "sessions",
-
-                    session.id
-
-                )
-
-            );
-
-        }
+        return this.impl.clearHistory();
 
     }
 
