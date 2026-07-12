@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -7,62 +8,66 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mental Math Gym</title>
+    <title>Math Gym</title>
 
 
-  <script type="module" crossorigin src="/mathgym/assets/index-Bu__PLfs.js"></script>
-  <link rel="stylesheet" crossorigin href="/mathgym/assets/index-BaCZJByo.css">
+  <script type="module" crossorigin src="/mathgym/assets/index-BFwpyNfB.js"></script>
+  <link rel="stylesheet" crossorigin href="/mathgym/assets/index-CkivYQE6.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- ====================================================== -->
+    <!-- Login -->
+    <!-- ====================================================== -->
 
-        <div id="loginScreen">
+    <div id="loginScreen">
 
-            <h1>
-        
-                Mental Math Gym
-        
-            </h1>
-        
-            <input
-        
-                id="email"
-        
-                type="email"
-        
-                placeholder="Email"
-        
-            >
-        
-            <input
-        
-                id="password"
-        
-                type="password"
-        
-                placeholder="Password"
-        
-            >
-        
-            <button id="loginButton">
-        
-                Login
-        
-            </button>
-        
+        <div class="container">
+
+            <div class="loginCard">
+
+                <h1>Math Gym</h1>
+
+                <p class="loginSubtitle">
+
+                    Train • Measure • Improve
+
+                </p>
+
+                <input id="email" type="email" placeholder="Email" autocomplete="email">
+
+                <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+
+                <button id="loginButton">
+
+                    Login
+
+                </button>
+
+                <button id="guestButton">
+
+                    Continue as Guest
+
+                </button>
+
+            </div>
+
         </div>
-        <!-- ====================================================== -->
-        <!-- Dashboard -->
-        <!-- ====================================================== -->
 
-        <div id="dashboardScreen" hidden>
+    </div>
 
-            <h1>Mental Math Gym</h1>
+    <!-- ====================================================== -->
+    <!-- Dashboard -->
+    <!-- ====================================================== -->
+
+    <div id="dashboardScreen" hidden>
+
+        <div class="container">
+
+            <h1>Math Gym</h1>
 
             <div class="dashboard">
-
 
                 <div class="dashboardCard">
 
@@ -128,12 +133,24 @@
 
                 </div>
 
+
+
+            </div>
+
+            <div class="analyticsButtonContainer">
+
+                <button id="analyticsButton" class="practiceButton">
+
+                    📊 Analytics
+
+                </button>
+
             </div>
 
             <button id="logoutButton">
 
                 Logout
-            
+
             </button>
 
             <h2>
@@ -142,7 +159,7 @@
 
             </h2>
 
-            
+
 
             <div class="practiceGrid">
 
@@ -150,9 +167,6 @@
 
                     <strong>Tables</strong>
 
-                    <br>
-
-                    2 - 20 × 2 - 10
 
                 </button>
 
@@ -160,9 +174,6 @@
 
                     <strong>Squares</strong>
 
-                    <br>
-
-                    2² - 100²
 
                 </button>
 
@@ -170,9 +181,6 @@
 
                     <strong>Cubes</strong>
 
-                    <br>
-
-                    2³ - 30³
 
                 </button>
 
@@ -205,13 +213,14 @@
                     Fraction / % → Decimal
 
                 </button>
+
                 <button id="ratiosButton" class="practiceButton">
 
                     <strong>Ratios</strong>
 
                     <br>
 
-                    Coming Soon
+                    Ratio → %
 
                 </button>
 
@@ -221,7 +230,7 @@
 
                     <br>
 
-                    Coming Soon
+                    All Topics
 
                 </button>
 
@@ -229,17 +238,101 @@
 
         </div>
 
-        <!-- ====================================================== -->
-        <!-- Practice -->
-        <!-- ====================================================== -->
+    </div>
 
-        <div id="practiceScreen" hidden>
+    <!-- ====================================================== -->
+    <!-- Practice -->
+    <!-- ====================================================== -->
+    <!-- ====================================================== -->
+    <!-- Practice -->
+    <!-- ====================================================== -->
+
+    <div id="analyticsMenuScreen" hidden>
+
+        <div class="container">
 
             <h1>
 
-                Mental Math Gym
+                Analytics
 
             </h1>
+
+            <button id="backToDashboardButton" class="secondaryButton">
+
+                ← Back
+
+            </button>
+
+            <div class="practiceGrid">
+
+                <button id="tablesAnalyticsButton" class="practiceButton">
+
+                    Tables
+
+                </button>
+
+                <button id="squaresAnalyticsButton" class="practiceButton">
+
+                    Squares
+
+                </button>
+
+                <button id="cubesAnalyticsButton" class="practiceButton">
+
+                    Cubes
+
+                </button>
+
+                <button id="squareRootsAnalyticsButton" class="practiceButton">
+
+                    Square Roots
+
+                </button>
+
+                <button id="cubeRootsAnalyticsButton" class="practiceButton">
+
+                    Cube Roots
+
+                </button>
+
+                <button id="equivalentsAnalyticsButton" class="practiceButton">
+
+                    Equivalents
+
+                </button>
+
+                <button id="ratiosAnalyticsButton" class="practiceButton">
+
+                    Ratios
+
+                </button>
+
+                <button id="mixedAnalyticsButton" class="practiceButton">
+
+                    Mixed
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div id="practiceScreen" hidden>
+
+        <div class="container">
+
+            <h1>
+
+                Math Gym
+
+            </h1>
+
+            <button id="quitPracticeButton" class="secondaryButton">
+
+                ← Quit Practice
+
+            </button>
 
             <div id="progress">
 
@@ -249,9 +342,9 @@
 
             <div id="question"></div>
 
-            <input id="answer" type="text" inputmode="numeric" autocomplete="off">
+            <input id="answer" type="number" inputmode="decimal" autocomplete="off" step="any">
 
-            <div class="calculator">
+            <div class="calculator" id="calculator">
 
                 <button data-value="7">7</button>
                 <button data-value="8">8</button>
@@ -285,19 +378,17 @@
 
             </div>
 
-            <button id="quitPracticeButton">
-
-                Quit Session
-            
-            </button>
-
         </div>
 
-        <!-- ====================================================== -->
-        <!-- Results -->
-        <!-- ====================================================== -->
+    </div>
 
-        <div id="resultScreen" hidden>
+    <!-- ====================================================== -->
+    <!-- Results -->
+    <!-- ====================================================== -->
+
+    <div id="resultScreen" hidden>
+
+        <div class="container">
 
             <h1>
 
@@ -340,7 +431,81 @@
         </div>
 
     </div>
-
+
+    <div id="analyticsScreen" hidden>
+
+        <div class="container">
+
+            <h1 id="analyticsTitle">
+
+                Analytics
+
+            </h1>
+
+            <div id="analyticsContent"></div>
+
+            <div class="analyticsSection">
+
+                <h2>
+
+                    Accuracy Trend
+
+                </h2>
+
+                <div class="analyticsChartContainer">
+
+                    <canvas id="accuracyChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="analyticsSection">
+
+                <h2>
+
+                    Solving Speed (Questions / Minute)
+
+                </h2>
+
+                <div class="analyticsChartContainer">
+
+                    <canvas id="speedChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <div id="weakItemsSection" class="analyticsSection">
+
+                <h2>
+
+                    Weak Items
+
+                </h2>
+
+                <div class="analyticsChartContainer">
+
+                    <canvas id="weakItemsChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <button id="analyticsBackButton">
+
+                Back
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 
