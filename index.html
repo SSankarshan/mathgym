@@ -441,15 +441,41 @@
 
             </h1>
 
-            <h2>Accuracy Trend</h2>
+            <div id="analyticsContent"></div>
 
-            <canvas id="accuracyChart"></canvas>
+            <div class="analyticsSection">
 
-            <h2>Solving Speed (Questions / Minute)</h2>
+                <h2>
 
-            <canvas id="speedChart"></canvas>
+                    Accuracy Trend
 
-            <div id="weakItemsSection">
+                </h2>
+
+                <div class="analyticsChartContainer">
+
+                    <canvas id="accuracyChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="analyticsSection">
+
+                <h2>
+
+                    Solving Speed (Questions / Minute)
+
+                </h2>
+
+                <div class="analyticsChartContainer">
+
+                    <canvas id="speedChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <div id="weakItemsSection" class="analyticsSection">
 
                 <h2>
 
@@ -457,11 +483,13 @@
 
                 </h2>
 
-                <canvas id="weakItemsChart"></canvas>
+                <div class="analyticsChartContainer">
+
+                    <canvas id="weakItemsChart"></canvas>
+
+                </div>
 
             </div>
-
-            <div id="analyticsContent"></div>
 
             <button id="analyticsBackButton">
 
@@ -472,6 +500,9 @@
         </div>
 
     </div>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="js/core/app.js"></script>

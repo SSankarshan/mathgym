@@ -8,86 +8,128 @@ export function generate() {
 
     const questions = [];
 
-    FRACTIONS.forEach(([numerator, denominator]) => {
+    FRACTIONS.forEach(
 
-        const decimal =
-            numerator / denominator;
+        ([numerator, denominator]) => {
 
-        const thousandths =
-            Math.round(
-                decimal * 1000
-            );
+            const decimal =
+                numerator / denominator;
 
-        questions.push(
-
-            new Question({
-
-                id: uuid(),
-
-                type: "FRACTION_TO_DECIMAL",
-
-                operands: [
-
-                    numerator,
-
-                    denominator
-
-                ],
-
-                display:
-                    `${removeTrailingZeros(decimal * 100)}%\nDecimal ×1000`,
-
-                answer: thousandths,
-
-                difficulty:
-                    calculateDifficulty(
-                        denominator
-                    ), weaknessKey:
-
-                    `${numerator}/${denominator}`
-
-            })
-
-        );
-
-        questions.push(
-
-            new Question({
-
-                id: uuid(),
-
-                type: "PERCENTAGE_TO_DECIMAL",
-
-                operands: [
+            const percentage =
+                removeTrailingZeros(
 
                     decimal * 100
 
-                ],
+                );
 
-                display:
+            const thousandths =
+                Math.round(
 
-                    `${removeTrailingZeros(decimal * 100)}%`,
+                    decimal * 1000
 
-                answer: decimal,
+                );
 
-                topic: "Equivalents",
+            const weaknessKey =
+                `${numerator}/${denominator}`;
 
-                difficulty:
-                    calculateDifficulty(
+            const difficulty =
+                calculateDifficulty(
+
+                    denominator
+
+                );
+
+            // Percentage -> Decimal ×1000
+
+            questions.push(
+
+                new Question({
+
+                    id: uuid(),
+
+                    type:
+
+                        "PERCENTAGE_TO_THOUSANDTHS",
+
+                    operands: [
+
+                        percentage
+
+                    ],
+
+                    display:
+
+                        `${percentage}% → ×1000`,
+
+                    answer:
+
+                        thousandths,
+
+                    topic:
+
+                        "Equivalents",
+
+                    difficulty,
+
+                    weaknessKey
+
+                })
+
+            );
+
+            // Fraction -> Decimal ×1000
+
+            questions.push(
+
+                new Question({
+
+                    id: uuid(),
+
+                    type:
+
+                        "FRACTION_TO_THOUSANDTHS",
+
+                    operands: [
+
+                        numerator,
+
                         denominator
-                    )
 
-            })
+                    ],
 
-        );
+                    display:
 
-    });
+                        `${numerator}/${denominator} → ×1000`,
+
+                    answer:
+
+                        thousandths,
+
+                    topic:
+
+                        "Equivalents",
+
+                    difficulty,
+
+                    weaknessKey
+
+                })
+
+            );
+
+        }
+
+    );
 
     return questions;
 
 }
 
-function roundToThreePlaces(value) {
+function removeTrailingZeros(
+
+    value
+
+) {
 
     return Number(
 
@@ -97,25 +139,27 @@ function roundToThreePlaces(value) {
 
 }
 
-function removeTrailingZeros(value) {
+function calculateDifficulty(
 
-    return Number(
+    denominator
 
-        value.toFixed(3)
+) {
 
-    );
+    if (
 
-}
+        denominator <= 5
 
-function calculateDifficulty(denominator) {
-
-    if (denominator <= 5) {
+    ) {
 
         return 1;
 
     }
 
-    if (denominator <= 12) {
+    if (
+
+        denominator <= 12
+
+    ) {
 
         return 2;
 
